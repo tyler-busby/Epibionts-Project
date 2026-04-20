@@ -1,0 +1,371 @@
+---
+title: "Epibionts Honors Capstone"
+output: html_document
+---
+
+# This is an old rmd. Please see the new .qmd file for updated work.
+
+
+# Loading Packages
+
+```{r}
+library(tidyverse)
+library(car)
+library(ggalluvial)
+library(mosaic)
+library(patchwork)
+```
+
+
+# Loading the Data
+
+```{r}
+cover <- read_csv("raw-data/Epibiont Survey Data Entry - Percent Ground Cover.csv", 
+                  skip = 1)
+counts <- read_csv("raw-data/Epibiont Survey Data Entry - Epibiont Counts.csv")
+names <- read_csv("raw-data/Epibiont Survey Data Entry - Names and IDs.csv")
+```
+
+
+# Creating Clean Counts Dataset
+
+```{r}
+counts_clean <- counts |>
+  unite(code, 1:3, sep = "-", remove = TRUE, na.rm = FALSE) |>
+  janitor::clean_names() |>
+  group_by(epibiont, basibiont) |>
+  select(c(code, epibiont, basibiont, count))
+```
+
+
+# Creating Full Clean Dataset
+
+```{r}
+epibiosis_clean <- cover |>
+  janitor::clean_names() |>
+  rename("site" = x1) |>
+  rename("transect" = x2) |>
+  rename("quad" = x3) |>
+  rename("height" = x4) |>
+  select(site, transect, quad, height, algae_cover, bare_rock, california_mussel) |>
+  unite(code, 1:3, sep = "-", remove = TRUE, na.rm = FALSE) |>
+  left_join(counts_clean, by = "code") |>
+  mutate_all(funs(ifelse(is.na(.), 0, .)))
+```
+
+
+# Determining Most Common Basibionts (1)
+
+```{r}
+epibiosis_clean |>
+  group_by(basibiont) |>
+  summarise(count = sum(count)) |>
+  filter(basibiont  != "[UNK] Several Basi") |>
+  filter(basibiont  != "0") |>
+  ggplot() +
+  geom_col(aes(y = count, x = fct_reorder(basibiont, -count), fill = fct_reorder(basibiont, -count))) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.3, size = 8)) +
+  labs(x = "Basibiont",
+       y = "Total Epibiont Count") +
+  scale_fill_manual(values = c("#08519C", "#3182BD", "#6BAED6", "#BDD7E7", "Gray", "Gray", "Gray", "Gray", "Gray",
+                               "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray",
+                               "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray")) +
+  scale_y_continuous(limits = c(0, 1250), expand = c(0, 0), breaks = c(0, 300, 600, 900, 1200)) +
+  guides(fill = "none")
+```
+
+
+# Determining Most Common Basibionts (2)
+
+```{r}
+epibiosis_clean |>
+  filter(basibiont  != "[UNK] Several Basi") |>
+  filter(basibiont  != "0") |>
+  dplyr::mutate(
+    basibiont = fct_collapse(as.factor(basibiont),
+               `California Mussel` = "California Mussel",
+               `Black Tegula` = "Black Tegula",
+               `Pink Volcano Barnacle` = "Pink Volcano Barnacle",
+               `Balanus` = "Balanus",
+               `Other Basibionts` = c("Hooked Slippersnail", "Hooked Slipper Snail", "Scabra", "Shield Limpet", 
+                                      "Brown Tegula", "Plate Limpet", "File Limpet", "Neostylidium", "Nucella",
+                                      "Striped Dogwinkle", "Emarginate Dogwinkle", "Littorina",  "Digitalis",
+                                      "Circled Rocksnail", "Beatic Dwarf Olive", "Carinate Dovesnail", 
+                                      "Unknown Blue Mussel", "Scaled Wormsnail", "California Spiny Chiton", 
+                                      "Mopalia ciliata", "Mossy Chiton", "Gooseneck Barnacle", "Black Limpet",
+                                      "Tegula sp.", "Whitecap Limpet", "Volcano Keyhole Limpet"))) |>
+  ggplot() +
+  geom_col(aes(y = count, x = fct_relevel(height, "Low", "Medium", "High"), 
+               fill = fct_relevel(basibiont, "California Mussel", "Black Tegula", "Pink Volcano Barnacle",
+                                           "Balanus", "Other Basibionts"))) +
+  theme_classic() +
+  labs(x = "Tidal Height",
+       y = "Total Epibiont Count",
+       fill = "Basibiont:") +
+  scale_fill_manual(values = c("#08519C", "#3182BD", "#6BAED6", "#BDD7E7", "Gray")) +
+  scale_y_continuous(limits = c(0, 820), expand = c(0, 0))
+```
+
+
+# Creating Cover vs Epibiont Abundance Scatterplots
+
+```{r}
+lin1 <- epibiosis_clean |>
+  group_by(code, height, algae_cover, bare_rock, california_mussel) |>
+  summarise(count = sum(count)) |>
+  ggplot(aes(x = algae_cover,
+            y = count)) +
+  geom_point() +
+  geom_smooth(aes(color = fct_relevel(height, "High",
+                                      "Medium",
+                                      "Low")),
+              method = lm,
+              se = FALSE) +
+  theme_classic() +
+  labs(x = "Algae Cover",
+       y = "Epibiont Count",
+       color = "Tidal Height:",
+       title = "a: Epibiont Count vs Algae Cover") +
+  scale_x_continuous(limits = c(0, 1)) +
+  scale_color_brewer() +
+  theme(title = element_text(size = 9.5),
+        axis.title.y = element_text(size = 9))
+
+lin2 <- epibiosis_clean |>
+  group_by(code, height, algae_cover, bare_rock, california_mussel) |>
+  summarise(count = sum(count)) |>
+  ggplot(aes(x = california_mussel,
+            y = count)) +
+  geom_point() +
+  geom_smooth(aes(color = fct_relevel(height, "High",
+                                      "Medium",
+                                      "Low")),
+              method = lm,
+              se = FALSE) +
+  theme_classic() +
+  labs(x = "Mussel Cover",
+       y = "Epibiont Count",
+       color = "Tidal Height:",
+       title = "b: Epibiont Count vs Mussel Cover") +
+  scale_x_continuous(limits = c(0, 1)) +
+  scale_color_brewer() +
+  theme(title = element_text(size = 9.5),
+        axis.title.y = element_text(size = 9))
+
+lin3 <- epibiosis_clean |>
+  filter(basibiont  != "California Mussel") |>
+  group_by(code, height, algae_cover, bare_rock, california_mussel) |>
+  summarise(count = sum(count)) |>
+  ggplot(aes(x = algae_cover,
+            y = count)) +
+  geom_point() +
+  geom_smooth(aes(color = fct_relevel(height, "High",
+                                      "Medium",
+                                      "Low")),
+              method = lm,
+              se = FALSE) +
+  theme_classic() +
+  labs(x = "Algae Cover",
+       y = "Epibiont Count",
+       color = "Tidal Height:",
+       title = "c: Epibiont Count vs Algae Cover \n    (No Mussel Basibionts)") +
+  scale_x_continuous(limits = c(0, 1)) +
+  scale_color_brewer() +
+  theme(title = element_text(size = 9.5),
+        axis.title.y = element_text(size = 9))
+
+lin4 <- epibiosis_clean |>
+  filter(basibiont  != "California Mussel") |>
+  group_by(code, height, algae_cover, bare_rock, california_mussel) |>
+  summarise(count = sum(count)) |>
+  ggplot(aes(x = california_mussel,
+            y = count)) +
+  geom_point() +
+  geom_smooth(aes(color = fct_relevel(height, "High",
+                                      "Medium",
+                                      "Low")),
+              method = lm,
+              se = FALSE) +
+  theme_classic() +
+  labs(x = "Mussel Cover",
+       y = "Epibiont Count",
+       color = "Tidal Height:",
+       title = "d: Epibiont Count vs Mussel Cover \n    (No Mussel Basibionts)") +
+  scale_x_continuous(limits = c(0, 1)) +
+  scale_color_brewer() +
+  theme(title = element_text(size = 9.5),
+        axis.title.y = element_text(size = 9))
+
+(lin1 + lin2)/(lin3 + lin4) + 
+  plot_layout(guides = "collect") +
+  plot_layout(axes = "collect_y") + #not currently working???
+  plot_annotation(title = "Epibiont Count by Percent Cover of Mussels and Algae",
+  theme = theme(plot.title = element_text(hjust = 0.5)))
+```
+
+
+# Running Full Poisson Model, Determining Relevant Stats
+
+```{r}
+epibiosis_clean_combined <- epibiosis_clean |>
+  group_by(code, height, algae_cover, bare_rock, california_mussel) |>
+  summarise(count = sum(count))
+
+epibiont_model <- glm(formula = count ~ factor(height) + california_mussel + algae_cover + 
+                        factor(height)*california_mussel + factor(height)*algae_cover,
+                      family = quasipoisson(link = log),
+                      data = epibiosis_clean_combined)
+
+summary(epibiont_model)
+vif(epibiont_model)
+```
+
+
+# Running Full Poisson Model Without Interaction Terms, Determining Relevant Stats
+
+```{r}
+epibiosis_clean_combined <- epibiosis_clean |>
+  group_by(code, height, algae_cover, bare_rock, california_mussel) |>
+  summarise(count = sum(count))
+
+epibiont_model <- glm(formula = count ~ factor(height) + california_mussel + algae_cover,
+                      family = quasipoisson(link = log),
+                      data = epibiosis_clean_combined)
+
+summary(epibiont_model)
+vif(epibiont_model)
+```
+
+
+#Creating residual vs fitted plot for our data
+
+```{r}
+gf_point(residuals(epibiont_model2, type = "pearson") ~ log(fitted.values(epibiont_model2)),
+         title = "Residual vs Fitted Plot",
+         xlab = "Log Fitted Values",
+         ylab = "Pearson Residuals") %>%
+  gf_hline(yintercept = 0)
+```
+
+
+# Determining the Predictive Power of Our Model
+
+```{r}
+G <- epibiont_model2$null.deviance - epibiont_model2$deviance
+df <- epibiont_model2$df.null - epibiont_model2$df.residual
+1 - pchisq(G, df)
+```
+
+
+# Creating Epibiont/Basibiont Pair Dataset for Our Visualization
+
+```{r}
+condensed_pairs <- epibiosis_clean |>
+  janitor::clean_names() |>
+  select(epibiont, basibiont, count) |>
+  filter(basibiont  != "[UNK] Several Basi") |>
+  filter(basibiont  != "0") |>
+  dplyr::mutate(
+    epibiont = fct_collapse(as.factor(epibiont),
+               `Limpets` = c("Scabra", "Digitalis", "Black Limpet", "Plate Limpet", "File Limpet"),
+               `Other Gastropods` = c("Hooked Slippersnail", "Translucent Slipper Snail", "Variegate Amphissa"),
+               `Barnacles` = c("Balanus", "Pink Volcano Barnacle", "Chthamalus", "Gooseneck Barnacle"),
+               `Serpulidae` = "Serpulidae",
+               `Bryozoa` = "Bryozoa",
+               `Tar Spot` = "Tar Spot",
+               `Red Algae` = c("Crustose Coralline Algae", "Filamentous Coralline Algae", "Red Algae",
+                               "Scouring Pad Algae", "Mastocarpus", "Nori", "Beauty Bush Algae"),
+               `Green Algae` = c("Green Algae", "Cladophora")),
+    basibiont = fct_collapse(as.factor(basibiont),
+               `Limpets` = c("Scabra", "File Limpet", "Black Limpet", "Shield Limpet", "Digitalis", "Plate Limpet",
+                             "Volcano Keyhole Limpet", "Whitecap Limpet"),
+               `Other Gastropods` = c("Black Tegula", "Hooked Slippersnail", "Nucella", "Tegula sp.", "Littorina",
+                                      "Brown Tegula", "Striped Dogwinkle", "Emarginate Dogwinkle",
+                                      "Circled Rocksnail", "Carinate Dovesnail"),
+               `Mussels` = "California Mussel",
+               `Wormsnails` = "Scaled Wormsnail",
+               `Chitons` = c("California Spiny Chiton", "Mossy Chiton"),
+               `Barnacles` = c("Balanus", "Gooseneck Barnacle", "Pink Volcano Barnacle"))) |>
+  group_by(epibiont, basibiont) |>
+  summarise(count = sum(count))
+```
+
+
+# Creating Visualization of all Epibiont/Basibiont Pairs
+
+```{r}
+condensed_pairs |>
+  ggplot(aes(axis1 = fct_relevel(epibiont,
+                                 "Limpets", "Other Gastropods", "Barnacles", "Serpulidae", "Bryozoa", "Tar Spot",
+                                 "Red Algae", "Green Algae"), 
+             axis2 = fct_relevel(basibiont,
+                                 "Limpets", "Mussels", "Wormsnails", "Chitons", "Other Gastropods", "Barnacles"), 
+             y = count)) +
+  geom_alluvium(aes(fill = fct_relevel(epibiont,
+                                 "Limpets", "Other Gastropods", "Barnacles", "Serpulidae", "Bryozoa", "Tar Spot",
+                                 "Red Algae", "Green Algae"))) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum)),
+            size = 3) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void() +
+  guides(fill = "none") +
+  labs(title = "Epibiont                                                                       Basibiont") +
+  theme(plot.title = element_text(size = 15, hjust = 0.5, vjust = -1))
+```
+
+
+# Separating Full Dataset by Sessile and Motile Basibionts
+
+```{r}
+sess_mot <- epibiosis_clean |>
+  dplyr::mutate(
+    basibiont = fct_collapse(as.factor(basibiont),
+                `Highly Motile` = c("Black Tegula", "Nucella", "Tegula sp.", "Littorina", 
+                           "Brown Tegula", "Striped Dogwinkle", "Emarginate Dogwinkle", "Circled Rocksnail", 
+                           "Carinate Dovesnail"),
+                Sedentary = c("Scabra", "File Limpet", "Black Limpet", "Shield Limpet", "Digitalis", 
+                              "Plate Limpet", "Volcano Keyhole Limpet", "Whitecap Limpet", 
+                              "Hooked Slippersnail", "California Spiny Chiton", "Mossy Chiton"),
+                Sessile = c("California Mussel", "Balanus", "Gooseneck Barnacle", "Pink Volcano Barnacle",
+                            "Scaled Wormsnail"),
+                Other = c("[UNK] Several Basi", "0")
+                )) |>
+  group_by(code, height, algae_cover, bare_rock, california_mussel, basibiont) |>
+  summarise(count = sum(count)) |>
+  filter(basibiont != "Other")
+```
+
+
+# Motile/Sessile Basibionts Boxplot
+
+```{r}
+sess_mot |>
+  ggplot(aes(y = count, x = fct_relevel(height, "Low", "Medium", "High"))) +
+  geom_boxplot(outliers = F) +
+  geom_jitter(alpha = 0.4, width = 0.2, aes(color = fct_relevel(height, "Low", "Medium", "High"))) +
+  facet_wrap(~fct_relevel(basibiont, "Motile", "Sessile")) +
+  scale_y_log10() +
+  theme_bw() +
+  labs(x = "Tidal Level",
+       y = "Epibiont Count") +
+  scale_color_viridis_d() +
+  guides(color = "none")
+```
+
+
+# Running Full Poisson Model, Determining Relevant Stats
+
+```{r}
+sess_v_mot_model <- glm(formula = count ~ factor(height) + california_mussel + algae_cover + bare_rock +
+                                factor(height)*california_mussel + factor(height)*algae_cover + factor(basibiont) 
+                                + factor(height)*factor(basibiont),
+                              family = quasipoisson(link = log),
+                              data = sess_mot)
+
+summary(sess_v_mot_model)
+vif(sess_v_mot_model)
+```

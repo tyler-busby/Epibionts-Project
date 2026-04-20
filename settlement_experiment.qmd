@@ -1,0 +1,23 @@
+---
+title: "settlement_experiment"
+author: Tyler Busby
+format: html
+---
+
+### Randomly generating where our rock and shells will be in the cage
+
+The numbers are placed in a random order, with the first 3 numbers referring to the left top, left middle, then left bottom, and the last 2 numbers being the right top, and right bottom.
+
+* 1 means rock 
+* 2 means mussel shell
+* 3 means limpet shell
+* 4 means tegula shell
+* 5 means nucella shell
+
+```{r}
+# creates 10 random orders by setting a seed then printing the results of the random sample without replacement
+for (i in 1:10) {
+  set.seed(i)
+  print(sample(1:5, 5, replace = F))}
+```
+

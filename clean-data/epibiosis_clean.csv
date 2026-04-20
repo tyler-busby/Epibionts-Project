@@ -1,0 +1,642 @@
+code,height,bare_rock,algae_cover,sessile_invert_cover,epibiont,basibiont,count
+Point Pinos 1-1-1,High,0.0625,0.9375,0,Hooked Slippersnail,Black Tegula,1
+Point Pinos 1-1-2,High,0,1,0,NA,NA,0
+Point Pinos 1-1-3,High,0.08333333333,0.9166666667000001,0,NA,NA,0
+Point Pinos 1-1-4,High,0.125,0.875,0,Digitalis,Black Tegula,1
+Point Pinos 1-1-5,High,0.1875,0.5625,0.25,NA,NA,0
+Point Pinos 1-1-6,High,0.3125,0.6875,0,NA,NA,0
+Point Pinos 1-1-7,High,0.0625,0.9375,0,Balanus,Black Tegula,1
+Point Pinos 1-1-8,High,0,0.75,0,Balanus,Black Tegula,3
+Point Pinos 1-1-9,High,0,0.8125,0,NA,NA,0
+Point Pinos 1-1-10,High,0.125,0.875,0,NA,NA,0
+Point Pinos 1-2-1,Medium,0,0.75,0,Black Limpet,Black Tegula,1
+Point Pinos 1-2-1,Medium,0,0.75,0,Digitalis,Black Tegula,1
+Point Pinos 1-2-1,Medium,0,0.75,0,Plate Limpet,Black Limpet,1
+Point Pinos 1-2-2,Medium,0,0.875,0,Hooked Slippersnail,Black Tegula,1
+Point Pinos 1-2-2,Medium,0,0.875,0,Hooked Slippersnail,Hooked Slippersnail,1
+Point Pinos 1-2-3,Medium,0,0.75,0,NA,NA,0
+Point Pinos 1-2-4,Medium,0.1875,0.4375,0,NA,NA,0
+Point Pinos 1-2-5,Medium,0.125,0.1875,0,Hooked Slippersnail,Black Tegula,1
+Point Pinos 1-2-5,Medium,0.125,0.1875,0,Serpulidae,Black Tegula,7
+Point Pinos 1-2-5,Medium,0.125,0.1875,0,Translucent Slipper Snail,Black Tegula,1
+Point Pinos 1-2-5,Medium,0.125,0.1875,0,Serpulidae,Tegula sp.,1
+Point Pinos 1-2-6,Medium,0.0625,0.75,0,Hooked Slippersnail,Black Tegula,1
+Point Pinos 1-2-7,Medium,0.125,0.8125,0,NA,NA,0
+Point Pinos 1-2-8,Medium,0.1875,0.625,0,Black Limpet,Black Tegula,2
+Point Pinos 1-2-8,Medium,0.1875,0.625,0,Digitalis,Black Tegula,1
+Point Pinos 1-2-9,Medium,0,0.875,0,NA,NA,0
+Point Pinos 1-2-10,Medium,0.1875,0.8125,0,NA,NA,0
+Point Pinos 1-3-1,Low,0,1,0,Hooked Slippersnail,Black Tegula,2
+Point Pinos 1-3-1,Low,0,1,0,Balanus,Black Tegula,1
+Point Pinos 1-3-1,Low,0,1,0,Digitalis,Black Tegula,1
+Point Pinos 1-3-2,Low,0.0625,0.9375,0,Hooked Slippersnail,Black Tegula,3
+Point Pinos 1-3-2,Low,0.0625,0.9375,0,Pink Volcano Barnacle,Black Tegula,1
+Point Pinos 1-3-2,Low,0.0625,0.9375,0,Balanus,Black Tegula,10
+Point Pinos 1-3-2,Low,0.0625,0.9375,0,Scouring Pad Algae,Black Tegula,2
+Point Pinos 1-3-2,Low,0.0625,0.9375,0,Digitalis,Black Tegula,2
+Point Pinos 1-3-3,Low,0.0625,0.9375,0,File Limpet,Black Tegula,1
+Point Pinos 1-3-3,Low,0.0625,0.9375,0,Digitalis,Black Tegula,2
+Point Pinos 1-3-3,Low,0.0625,0.9375,0,Scouring Pad Algae,Black Tegula,4
+Point Pinos 1-3-3,Low,0.0625,0.9375,0,Crustose Coralline Algae,Black Tegula,1
+Point Pinos 1-3-3,Low,0.0625,0.9375,0,Hooked Slippersnail,Littorina,1
+Point Pinos 1-3-4,Low,0.1875,0.6875,0,Serpulidae,Black Tegula,1
+Point Pinos 1-3-4,Low,0.1875,0.6875,0,File Limpet,Black Tegula,1
+Point Pinos 1-3-4,Low,0.1875,0.6875,0,Black Limpet,Black Tegula,1
+Point Pinos 1-3-4,Low,0.1875,0.6875,0,Balanus,Black Tegula,1
+Point Pinos 1-3-5,Low,0,0.875,0,Hooked Slippersnail,Black Tegula,1
+Point Pinos 1-3-5,Low,0,0.875,0,Digitalis,Black Tegula,2
+Point Pinos 1-3-6,Low,0.375,0.4375,0,Hooked Slippersnail,Black Tegula,1
+Point Pinos 1-3-7,Low,0,1,0,Black Limpet,Black Tegula,1
+Point Pinos 1-3-7,Low,0,1,0,Digitalis,Black Tegula,1
+Point Pinos 1-3-8,Low,0,0.8125,0,File Limpet,Black Tegula,1
+Point Pinos 1-3-8,Low,0,0.8125,0,Black Limpet,Black Tegula,1
+Point Pinos 1-3-9,Low,0.0625,0.625,0,Digitalis,Black Tegula,1
+Point Pinos 1-3-9,Low,0.0625,0.625,0,Discurria,Black Tegula,1
+Point Pinos 1-3-10,Low,0,0.9375,0,Digitalis,Black Tegula,1
+Great Tidepool 1-1-1,High,0.25,0.75,0,Green Algae,Shield Limpet,1
+Great Tidepool 1-1-1,High,0.25,0.75,0,Green Algae,Gooseneck Barnacle,2
+Great Tidepool 1-1-2,High,0.1875,0.8125,0,Digitalis,Black Tegula,2
+Great Tidepool 1-1-2,High,0.1875,0.8125,0,Balanus,Black Tegula,2
+Great Tidepool 1-1-3,High,0.125,0.6875,0.1875,Balanus,Pink Volcano Barnacle,5
+Great Tidepool 1-1-3,High,0.125,0.6875,0.1875,Digitalis,Pink Volcano Barnacle,2
+Great Tidepool 1-1-3,High,0.125,0.6875,0.1875,Balanus,Gooseneck Barnacle,1
+Great Tidepool 1-1-3,High,0.125,0.6875,0.1875,Digitalis,Gooseneck Barnacle,1
+Great Tidepool 1-1-3,High,0.125,0.6875,0.1875,File Limpet,Gooseneck Barnacle,1
+Great Tidepool 1-1-4,High,0.0625,0.9375,0,Crustose Coralline Algae,Pink Volcano Barnacle,3
+Great Tidepool 1-1-4,High,0.0625,0.9375,0,Digitalis,Pink Volcano Barnacle,1
+Great Tidepool 1-1-4,High,0.0625,0.9375,0,Balanus,Pink Volcano Barnacle,3
+Great Tidepool 1-1-5,High,0.1875,0.8125,0,Digitalis,Pink Volcano Barnacle,1
+Great Tidepool 1-1-5,High,0.1875,0.8125,0,Crustose Coralline Algae,Pink Volcano Barnacle,3
+Great Tidepool 1-1-5,High,0.1875,0.8125,0,Balanus,Black Tegula,1
+Great Tidepool 1-1-6,High,0.0625,0.875,0.0625,Green Algae,Scabra,1
+Great Tidepool 1-1-6,High,0.0625,0.875,0.0625,Filamentous Coralline Algae,Digitalis,1
+Great Tidepool 1-1-7,High,0.125,0.875,0,Balanus,Black Tegula,10
+Great Tidepool 1-1-7,High,0.125,0.875,0,Balanus,Nucella,4
+Great Tidepool 1-1-8,High,0.375,0,0.625,Balanus,Balanus,1
+Great Tidepool 1-1-9,High,0.5625,0.1875,0.25,Mastocarpus,Gooseneck Barnacle,1
+Great Tidepool 1-1-9,High,0.5625,0.1875,0.25,Translucent Slipper Snail,Digitalis,2
+Great Tidepool 1-1-10,High,0.5,0.375,0.125,Balanus,California Mussel,3
+Great Tidepool 1-2-1,Medium,0.1875,0.8125,0,Digitalis,Shield Limpet,3
+Great Tidepool 1-2-2,Medium,0,1,0,Digitalis,Shield Limpet,1
+Great Tidepool 1-2-2,Medium,0,1,0,Black Limpet,Shield Limpet,1
+Great Tidepool 1-2-2,Medium,0,1,0,Crustose Coralline Algae,Shield Limpet,2
+Great Tidepool 1-2-3,Medium,0.125,0.875,0,Tar Spot,Pink Volcano Barnacle,4
+Great Tidepool 1-2-3,Medium,0.125,0.875,0,Mastocarpus,Pink Volcano Barnacle,1
+Great Tidepool 1-2-3,Medium,0.125,0.875,0,Tar Spot,Black Tegula,1
+Great Tidepool 1-2-3,Medium,0.125,0.875,0,Serpulidae,Black Tegula,1
+Great Tidepool 1-2-3,Medium,0.125,0.875,0,Black Limpet,Black Tegula,1
+Great Tidepool 1-2-4,Medium,0.125,0.625,0.25,Balanus,Black Tegula,3
+Great Tidepool 1-2-4,Medium,0.125,0.625,0.25,Mastocarpus,Black Tegula,1
+Great Tidepool 1-2-4,Medium,0.125,0.625,0.25,Black Limpet,Black Tegula,1
+Great Tidepool 1-2-4,Medium,0.125,0.625,0.25,Serpulidae,Black Tegula,1
+Great Tidepool 1-2-4,Medium,0.125,0.625,0.25,Digitalis,Black Tegula,2
+Great Tidepool 1-2-4,Medium,0.125,0.625,0.25,Hooked Slippersnail,Black Tegula,1
+Great Tidepool 1-2-5,Medium,0.1875,0.8125,0,Balanus,Black Tegula,6
+Great Tidepool 1-2-5,Medium,0.1875,0.8125,0,Digitalis,Black Tegula,2
+Great Tidepool 1-2-6,Medium,0,1,0,Balanus,Black Tegula,2
+Great Tidepool 1-2-6,Medium,0,1,0,Mastocarpus,Black Tegula,1
+Great Tidepool 1-2-7,Medium,0.0625,0.8125,0.125,Balanus,Black Tegula,7
+Great Tidepool 1-2-7,Medium,0.0625,0.8125,0.125,Discurria,Black Tegula,1
+Great Tidepool 1-2-8,Medium,0.1875,0.8125,0,Tar Spot,Pink Volcano Barnacle,1
+Great Tidepool 1-2-8,Medium,0.1875,0.8125,0,Balanus,Black Tegula,1
+Great Tidepool 1-2-8,Medium,0.1875,0.8125,0,Digitalis,Black Tegula,2
+Great Tidepool 1-2-8,Medium,0.1875,0.8125,0,Black Limpet,Black Tegula,1
+Great Tidepool 1-2-9,Medium,0.125,0.6875,0.1875,Balanus,Pink Volcano Barnacle,14
+Great Tidepool 1-2-9,Medium,0.125,0.6875,0.1875,Digitalis,Pink Volcano Barnacle,3
+Great Tidepool 1-2-9,Medium,0.125,0.6875,0.1875,Balanus,California Mussel,58
+Great Tidepool 1-2-9,Medium,0.125,0.6875,0.1875,Chthamalus,California Mussel,7
+Great Tidepool 1-2-9,Medium,0.125,0.6875,0.1875,Black Limpet,California Mussel,10
+Great Tidepool 1-2-9,Medium,0.125,0.6875,0.1875,Digitalis,California Mussel,6
+Great Tidepool 1-2-9,Medium,0.125,0.6875,0.1875,Scabra,California Mussel,3
+Great Tidepool 1-2-10,Medium,0.1875,0.8125,0,Digitalis,Black Tegula,1
+Great Tidepool 1-3-1,Low,0,1,0,Filamentous Coralline Algae,Scaled Wormsnail,1
+Great Tidepool 1-3-1,Low,0,1,0,Crustose Coralline Algae,Scaled Wormsnail,1
+Great Tidepool 1-3-1,Low,0,1,0,Tar Spot,Scaled Wormsnail,1
+Great Tidepool 1-3-1,Low,0,1,0,Scabra,Volcano Keyhole Limpet,1
+Great Tidepool 1-3-1,Low,0,1,0,Tar Spot,Pink Volcano Barnacle,1
+Great Tidepool 1-3-2,Low,0.1875,0.8125,0,Mastocarpus,Plate Limpet,2
+Great Tidepool 1-3-2,Low,0.1875,0.8125,0,Mastocarpus,Pink Volcano Barnacle,2
+Great Tidepool 1-3-2,Low,0.1875,0.8125,0,Crustose Coralline Algae,Pink Volcano Barnacle,2
+Great Tidepool 1-3-2,Low,0.1875,0.8125,0,Filamentous Coralline Algae,Pink Volcano Barnacle,1
+Great Tidepool 1-3-3,Low,0.0625,0.9375,0,Tar Spot,Pink Volcano Barnacle,2
+Great Tidepool 1-3-3,Low,0.0625,0.9375,0,Pink Volcano Barnacle,Pink Volcano Barnacle,1
+Great Tidepool 1-3-4,Low,0.0625,0.875,0,Hooked Slippersnail,Black Tegula,1
+Great Tidepool 1-3-4,Low,0.0625,0.875,0,Balanus,Black Tegula,4
+Great Tidepool 1-3-4,Low,0.0625,0.875,0,Crustose Coralline Algae,Hooked Slippersnail,1
+Great Tidepool 1-3-4,Low,0.0625,0.875,0,Hooked Slippersnail,Hooked Slippersnail,1
+Great Tidepool 1-3-5,Low,0.1875,0.75,0.0625,Bryozoa,Balanus,7
+Great Tidepool 1-3-5,Low,0.1875,0.75,0.0625,Tar Spot,Black Tegula,1
+Great Tidepool 1-3-5,Low,0.1875,0.75,0.0625,Crustose Coralline Algae,Plate Limpet,1
+Great Tidepool 1-3-6,Low,0,1,0,Hooked Slippersnail,Black Tegula,2
+Great Tidepool 1-3-6,Low,0,1,0,Hooked Slippersnail,Hooked Slippersnail,1
+Great Tidepool 1-3-6,Low,0,1,0,Crustose Coralline Algae,Hooked Slippersnail,1
+Great Tidepool 1-3-7,Low,0,1,0,Scouring Pad Algae,Volcano Keyhole Limpet,2
+Great Tidepool 1-3-8,Low,0,1,0,Crustose Coralline Algae,Volcano Keyhole Limpet,1
+Great Tidepool 1-3-8,Low,0,1,0,Red Algae,Shield Limpet,1
+Great Tidepool 1-3-9,Low,0.1875,0.8125,0,Crustose Coralline Algae,Black Tegula,2
+Great Tidepool 1-3-9,Low,0.1875,0.8125,0,Balanus,Black Tegula,6
+Great Tidepool 1-3-9,Low,0.1875,0.8125,0,Digitalis,Black Tegula,3
+Great Tidepool 1-3-10,Low,0,1,0,Crustose Coralline Algae,Balanus,1
+Great Tidepool 1-3-10,Low,0,1,0,Mastocarpus,Black Tegula,1
+Great Tidepool 1-3-10,Low,0,1,0,Balanus,Black Tegula,4
+Great Tidepool 1-3-10,Low,0,1,0,Digitalis,Black Tegula,1
+Point Pinos 2-1-1,High,0.5625,0.375,0.0625,Balanus,California Mussel,2
+Point Pinos 2-1-2,High,0.2,0.46666666664,0.33333333337,Digitalis,California Mussel,4
+Point Pinos 2-1-2,High,0.2,0.46666666664,0.33333333337,Balanus,California Mussel,6
+Point Pinos 2-1-2,High,0.2,0.46666666664,0.33333333337,Crustose Coralline Algae,California Mussel,2
+Point Pinos 2-1-2,High,0.2,0.46666666664,0.33333333337,Pink Volcano Barnacle,California Mussel,1
+Point Pinos 2-1-2,High,0.2,0.46666666664,0.33333333337,Black Limpet,California Mussel,2
+Point Pinos 2-1-3,High,0.125,0.5,0.375,Scouring Pad Algae,California Mussel,2
+Point Pinos 2-1-3,High,0.125,0.5,0.375,Nori,California Mussel,1
+Point Pinos 2-1-3,High,0.125,0.5,0.375,Balanus,California Mussel,3
+Point Pinos 2-1-3,High,0.125,0.5,0.375,Digitalis,California Mussel,5
+Point Pinos 2-1-3,High,0.125,0.5,0.375,File Limpet,California Mussel,1
+Point Pinos 2-1-3,High,0.125,0.5,0.375,Black Limpet,California Mussel,1
+Point Pinos 2-1-3,High,0.125,0.5,0.375,Scouring Pad Algae,Gooseneck Barnacle,1
+Point Pinos 2-1-4,High,0,1,0,Scouring Pad Algae,California Mussel,1
+Point Pinos 2-1-4,High,0,1,0,Mastocarpus,California Mussel,1
+Point Pinos 2-1-4,High,0,1,0,Digitalis,California Mussel,1
+Point Pinos 2-1-5,High,0.125,0.6875,0.1875,Digitalis,California Mussel,1
+Point Pinos 2-1-5,High,0.125,0.6875,0.1875,Balanus,California Mussel,4
+Point Pinos 2-1-5,High,0.125,0.6875,0.1875,Balanus,Pink Volcano Barnacle,2
+Point Pinos 2-1-5,High,0.125,0.6875,0.1875,Crustose Coralline Algae,Pink Volcano Barnacle,1
+Point Pinos 2-1-5,High,0.125,0.6875,0.1875,Tar Spot,Pink Volcano Barnacle,1
+Point Pinos 2-1-6,High,0.25,0.25,0.5,Balanus,California Mussel,18
+Point Pinos 2-1-7,High,0.2941176471,0.70588235292,0,NA,NA,0
+Point Pinos 2-1-8,High,0.0625,0.9375,0,Crustose Coralline Algae,Pink Volcano Barnacle,1
+Point Pinos 2-1-8,High,0.0625,0.9375,0,Crustose Coralline Algae,California Spiny Chiton,1
+Point Pinos 2-1-8,High,0.0625,0.9375,0,Balanus,California Mussel,4
+Point Pinos 2-1-9,High,0.1875,0.8125,0,Crustose Coralline Algae,Pink Volcano Barnacle,2
+Point Pinos 2-1-10,High,0.1875,0.8125,0,Crustose Coralline Algae,California Spiny Chiton,1
+Point Pinos 2-1-10,High,0.1875,0.8125,0,Crustose Coralline Algae,Pink Volcano Barnacle,2
+Point Pinos 2-2-1,Medium,0.25,0.1875,0.5625,Digitalis,Balanus,3
+Point Pinos 2-2-1,Medium,0.25,0.1875,0.5625,Pink Volcano Barnacle,Balanus,3
+Point Pinos 2-2-1,Medium,0.25,0.1875,0.5625,Black Limpet,Balanus,1
+Point Pinos 2-2-1,Medium,0.25,0.1875,0.5625,Nori,Balanus,3
+Point Pinos 2-2-1,Medium,0.25,0.1875,0.5625,Balanus,Balanus,21
+Point Pinos 2-2-1,Medium,0.25,0.1875,0.5625,Black Limpet,California Mussel,4
+Point Pinos 2-2-1,Medium,0.25,0.1875,0.5625,Digitalis,California Mussel,1
+Point Pinos 2-2-1,Medium,0.25,0.1875,0.5625,Crustose Coralline Algae,Gooseneck Barnacle,1
+Point Pinos 2-2-1,Medium,0.25,0.1875,0.5625,Black Limpet,Gooseneck Barnacle,1
+Point Pinos 2-2-2,Medium,0.625,0,0.375,Balanus,California Mussel,2
+Point Pinos 2-2-2,Medium,0.625,0,0.375,Black Limpet,California Mussel,6
+Point Pinos 2-2-2,Medium,0.625,0,0.375,Balanus,Balanus,2
+Point Pinos 2-2-2,Medium,0.625,0,0.375,Balanus,Scabra,1
+Point Pinos 2-2-3,Medium,0,0.0625,0.9375,Black Limpet,California Mussel,27
+Point Pinos 2-2-3,Medium,0,0.0625,0.9375,Balanus,California Mussel,24
+Point Pinos 2-2-3,Medium,0,0.0625,0.9375,Chthamalus,California Mussel,6
+Point Pinos 2-2-3,Medium,0,0.0625,0.9375,Nori,California Mussel,1
+Point Pinos 2-2-4,Medium,0.0625,0,0.9375,Balanus,California Mussel,10
+Point Pinos 2-2-4,Medium,0.0625,0,0.9375,Chthamalus,California Mussel,3
+Point Pinos 2-2-4,Medium,0.0625,0,0.9375,Black Limpet,California Mussel,20
+Point Pinos 2-2-4,Medium,0.0625,0,0.9375,Digitalis,California Mussel,1
+Point Pinos 2-2-4,Medium,0.0625,0,0.9375,Digitalis,Balanus,1
+Point Pinos 2-2-4,Medium,0.0625,0,0.9375,Digitalis,Pink Volcano Barnacle,1
+Point Pinos 2-2-4,Medium,0.0625,0,0.9375,Balanus,Pink Volcano Barnacle,1
+Point Pinos 2-2-4,Medium,0.0625,0,0.9375,Scabra,Pink Volcano Barnacle,1
+Point Pinos 2-2-5,Medium,0.3125,0,0.6875,Chthamalus,California Mussel,21
+Point Pinos 2-2-5,Medium,0.3125,0,0.6875,Digitalis,California Mussel,2
+Point Pinos 2-2-5,Medium,0.3125,0,0.6875,Black Limpet,California Mussel,34
+Point Pinos 2-2-5,Medium,0.3125,0,0.6875,Nori,Balanus,1
+Point Pinos 2-2-5,Medium,0.3125,0,0.6875,Green Algae,Scabra,1
+Point Pinos 2-2-5,Medium,0.3125,0,0.6875,Balanus,California Mussel,7
+Point Pinos 2-2-6,Medium,0.125,0.0625,0.8125,Black Limpet,California Mussel,17
+Point Pinos 2-2-6,Medium,0.125,0.0625,0.8125,Digitalis,California Mussel,2
+Point Pinos 2-2-6,Medium,0.125,0.0625,0.8125,Balanus,Balanus,1
+Point Pinos 2-2-6,Medium,0.125,0.0625,0.8125,Balanus,Pink Volcano Barnacle,15
+Point Pinos 2-2-6,Medium,0.125,0.0625,0.8125,Black Limpet,Pink Volcano Barnacle,5
+Point Pinos 2-2-6,Medium,0.125,0.0625,0.8125,Pink Volcano Barnacle,Balanus,4
+Point Pinos 2-2-7,Medium,0.4375,0.5,0.0625,Black Limpet,Black Tegula,1
+Point Pinos 2-2-7,Medium,0.4375,0.5,0.0625,Black Limpet,California Mussel,7
+Point Pinos 2-2-8,Medium,0.125,0.125,0.6875,Crustose Coralline Algae,California Mussel,4
+Point Pinos 2-2-8,Medium,0.125,0.125,0.6875,Digitalis,California Mussel,1
+Point Pinos 2-2-8,Medium,0.125,0.125,0.6875,Tar Spot,Brown Tegula,1
+Point Pinos 2-2-8,Medium,0.125,0.125,0.6875,Crustose Coralline Algae,Digitalis,1
+Point Pinos 2-2-8,Medium,0.125,0.125,0.6875,Crustose Coralline Algae,Pink Volcano Barnacle,1
+Point Pinos 2-2-8,Medium,0.125,0.125,0.6875,Tar Spot,Pink Volcano Barnacle,1
+Point Pinos 2-2-9,Medium,0,0.125,0.875,Digitalis,California Mussel,1
+Point Pinos 2-2-9,Medium,0,0.125,0.875,Crustose Coralline Algae,Digitalis,1
+Point Pinos 2-2-10,Medium,0.1875,0.8125,0,Black Limpet,California Mussel,3
+Point Pinos 2-3-1,Low,0.0625,0.5,0.3125,Crustose Coralline Algae,California Mussel,7
+Point Pinos 2-3-1,Low,0.0625,0.5,0.3125,Black Limpet,California Mussel,1
+Point Pinos 2-3-2,Low,0.1875,0.625,0.1875,Digitalis,Balanus,2
+Point Pinos 2-3-2,Low,0.1875,0.625,0.1875,Crustose Coralline Algae,Balanus,1
+Point Pinos 2-3-2,Low,0.1875,0.625,0.1875,Black Limpet,California Mussel,3
+Point Pinos 2-3-3,Low,0.1875,0.5,0.3125,Tar Spot,Brown Tegula,1
+Point Pinos 2-3-3,Low,0.1875,0.5,0.3125,Crustose Coralline Algae,Brown Tegula,1
+Point Pinos 2-3-3,Low,0.1875,0.5,0.3125,Hooked Slippersnail,Black Tegula,1
+Point Pinos 2-3-4,Low,0.4166666667,0.1666666667,0.41666666672999997,Black Limpet,California Mussel,2
+Point Pinos 2-3-5,Low,0,0.5,0.5,Digitalis,California Mussel,2
+Point Pinos 2-3-6,Low,0.25,0.4375,0.3125,Digitalis,Balanus,3
+Point Pinos 2-3-6,Low,0.25,0.4375,0.3125,Green Algae,Balanus,1
+Point Pinos 2-3-6,Low,0.25,0.4375,0.3125,Crustose Coralline Algae,Balanus,1
+Point Pinos 2-3-6,Low,0.25,0.4375,0.3125,Tar Spot,Digitalis,5
+Point Pinos 2-3-6,Low,0.25,0.4375,0.3125,Tar Spot,Shield Limpet,1
+Point Pinos 2-3-7,Low,0.0625,0.8125,0.0625,Tar Spot,Digitalis,1
+Point Pinos 2-3-7,Low,0.0625,0.8125,0.0625,Crustose Coralline Algae,Digitalis,3
+Point Pinos 2-3-7,Low,0.0625,0.8125,0.0625,Mastocarpus,Digitalis,1
+Point Pinos 2-3-8,Low,0.1875,0.4375,0.25,Crustose Coralline Algae,California Mussel,3
+Point Pinos 2-3-8,Low,0.1875,0.4375,0.25,Black Limpet,California Mussel,1
+Point Pinos 2-3-8,Low,0.1875,0.4375,0.25,Tar Spot,California Mussel,1
+Point Pinos 2-3-9,Low,0,0.875,0.125,Digitalis,Digitalis,1
+Point Pinos 2-3-9,Low,0,0.875,0.125,Crustose Coralline Algae,Balanus,2
+Point Pinos 2-3-10,Low,0,1,0,Crustose Coralline Algae,California Mussel,1
+Asilomar 1-1-1,High,0.4375,0.5625,0,Digitalis,Black Tegula,1
+Asilomar 1-1-2,High,0.5,0.4375,0.0625,Balanus,Black Tegula,1
+Asilomar 1-1-2,High,0.5,0.4375,0.0625,Digitalis,Black Tegula,1
+Asilomar 1-1-3,High,0,0.75,0.25,Balanus,Pink Volcano Barnacle,1
+Asilomar 1-1-3,High,0,0.75,0.25,Black Limpet,Black Tegula,2
+Asilomar 1-1-4,High,0.375,0.625,0,Black Limpet,Black Tegula,1
+Asilomar 1-1-5,High,0.375,0.625,0,Black Limpet,Black Tegula,1
+Asilomar 1-1-5,High,0.375,0.625,0,Digitalis,Black Tegula,1
+Asilomar 1-1-5,High,0.375,0.625,0,Crustose Coralline Algae,California Mussel,1
+Asilomar 1-1-6,High,0.375,0.5625,0.0625,Digitalis,Gooseneck Barnacle,3
+Asilomar 1-1-6,High,0.375,0.5625,0.0625,Tar Spot,Gooseneck Barnacle,2
+Asilomar 1-1-6,High,0.375,0.5625,0.0625,Cladophora,Gooseneck Barnacle,1
+Asilomar 1-1-6,High,0.375,0.5625,0.0625,Mastocarpus,Gooseneck Barnacle,1
+Asilomar 1-2-1,Medium,0.25,0.6875,0.0625,Black Limpet,Black Tegula,1
+Asilomar 1-2-1,Medium,0.25,0.6875,0.0625,Digitalis,Shield Limpet,1
+Asilomar 1-2-1,Medium,0.25,0.6875,0.0625,Mastocarpus,Shield Limpet,1
+Asilomar 1-2-2,Medium,0.1875,0.75,0.0625,Black Limpet,California Mussel,1
+Asilomar 1-2-2,Medium,0.1875,0.75,0.0625,Digitalis,California Mussel,1
+Asilomar 1-2-2,Medium,0.1875,0.75,0.0625,Black Limpet,Black Tegula,1
+Asilomar 1-2-3,Medium,0.1875,0.8125,0,Digitalis,Pink Volcano Barnacle,1
+Asilomar 1-2-3,Medium,0.1875,0.8125,0,Green Algae,Scabra,8
+Asilomar 1-2-3,Medium,0.1875,0.8125,0,Crustose Coralline Algae,Pink Volcano Barnacle,1
+Asilomar 1-2-4,Medium,0.0625,0.8125,0.125,Green Algae,Scabra,8
+Asilomar 1-2-4,Medium,0.0625,0.8125,0.125,Digitalis,Shield Limpet,2
+Asilomar 1-2-5,Medium,0.625,0.3125,0.0625,Green Algae,Scabra,10
+Asilomar 1-2-5,Medium,0.625,0.3125,0.0625,Green Algae,Shield Limpet,1
+Asilomar 1-2-6,Medium,0.375,0.5625,0.0625,Digitalis,California Mussel,1
+Asilomar 1-2-6,Medium,0.375,0.5625,0.0625,Digitalis,Black Tegula,2
+Asilomar 1-2-6,Medium,0.375,0.5625,0.0625,Black Limpet,California Mussel,1
+Asilomar 1-2-6,Medium,0.375,0.5625,0.0625,Balanus,California Spiny Chiton,2
+Asilomar 1-2-6,Medium,0.375,0.5625,0.0625,Crustose Coralline Algae,California Spiny Chiton,1
+Asilomar 1-2-6,Medium,0.375,0.5625,0.0625,Digitalis,California Spiny Chiton,1
+Asilomar 1-2-6,Medium,0.375,0.5625,0.0625,Tar Spot,California Spiny Chiton,1
+Asilomar 1-3-1,Low,0.375,0.5,0.125,Green Algae,Shield Limpet,2
+Asilomar 1-3-1,Low,0.375,0.5,0.125,Scouring Pad Algae,Pink Volcano Barnacle,2
+Asilomar 1-3-1,Low,0.375,0.5,0.125,Tar Spot,Pink Volcano Barnacle,11
+Asilomar 1-3-1,Low,0.375,0.5,0.125,Balanus,Pink Volcano Barnacle,3
+Asilomar 1-3-2,Low,0.375,0.4375,0.1875,Green Algae,Shield Limpet,1
+Asilomar 1-3-2,Low,0.375,0.4375,0.1875,Digitalis,Black Tegula,1
+Asilomar 1-3-2,Low,0.375,0.4375,0.1875,Hooked Slippersnail,Black Tegula,1
+Asilomar 1-3-3,Low,0.3125,0.625,0.0625,Scabra,Shield Limpet,1
+Asilomar 1-3-3,Low,0.3125,0.625,0.0625,Black Limpet,Black Tegula,1
+Asilomar 1-3-4,Low,0.1875,0.8125,0,Green Algae,Shield Limpet,7
+Asilomar 1-3-4,Low,0.1875,0.8125,0,Digitalis,Black Tegula,1
+Asilomar 1-3-4,Low,0.1875,0.8125,0,Mastocarpus,Black Tegula,1
+Asilomar 1-3-5,Low,0.0625,0.875,0.0625,Crustose Coralline Algae,Black Tegula,1
+Asilomar 1-3-5,Low,0.0625,0.875,0.0625,Digitalis,Black Tegula,1
+Asilomar 1-3-6,Low,0.25,0.5625,0.1875,Green Algae,Shield Limpet,5
+Asilomar 1-3-6,Low,0.25,0.5625,0.1875,Digitalis,Black Tegula,1
+Asilomar 1-3-6,Low,0.25,0.5625,0.1875,Digitalis,Shield Limpet,3
+Asilomar 1-3-6,Low,0.25,0.5625,0.1875,Digitalis,Volcano Keyhole Limpet,3
+Asilomar 1-3-6,Low,0.25,0.5625,0.1875,Balanus,Black Tegula,1
+Asilomar 1-3-6,Low,0.25,0.5625,0.1875,Tar Spot,Black Tegula,1
+Asilomar 1-3-6,Low,0.25,0.5625,0.1875,Red Algae,Black Tegula,1
+Asilomar 1-3-6,Low,0.25,0.5625,0.1875,Green Algae,Digitalis,4
+Asilomar 2-1-1,High,0.5625,0.4375,0,Green Algae,Scabra,13
+Asilomar 2-1-1,High,0.5625,0.4375,0,Green Algae,Balanus,1
+Asilomar 2-1-2,High,0.3125,0.6875,0,Digitalis,Littorina,1
+Asilomar 2-1-2,High,0.3125,0.6875,0,Green Algae,Shield Limpet,1
+Asilomar 2-1-3,High,0.5,0.4375,0.0625,Tar Spot,Black Tegula,1
+Asilomar 2-1-3,High,0.5,0.4375,0.0625,Crustose Coralline Algae,California Spiny Chiton,1
+Asilomar 2-1-4,High,0.6875,0.25,0.0625,Green Algae,Scabra,8
+Asilomar 2-1-4,High,0.6875,0.25,0.0625,Nori,Scabra,1
+Asilomar 2-1-5,High,0.6875,0.1875,0.125,Green Algae,Scabra,9
+Asilomar 2-1-6,High,0.75,0.25,0,Green Algae,Scabra,2
+Asilomar 2-1-7,High,0.8125,0.1875,0,Green Algae,Scabra,1
+Asilomar 2-2-1,Medium,0.0625,0.9375,0,Digitalis,Black Tegula,1
+Asilomar 2-2-2,Medium,0.06666666667,0.93333333337,0,Balanus,Black Tegula,3
+Asilomar 2-2-2,Medium,0.06666666667,0.93333333337,0,Digitalis,Black Tegula,1
+Asilomar 2-2-2,Medium,0.06666666667,0.93333333337,0,Tar Spot,Black Tegula,1
+Asilomar 2-2-3,Medium,0,0.9375,0,Scouring Pad Algae,Black Tegula,1
+Asilomar 2-2-4,Medium,0,1,0,Digitalis,Black Tegula,2
+Asilomar 2-2-5,Medium,0.0625,0.9375,0,Black Limpet,Black Tegula,1
+Asilomar 2-2-6,Medium,0.2,0.79999999998,0,Crustose Coralline Algae,California Spiny Chiton,1
+Asilomar 2-2-6,Medium,0.2,0.79999999998,0,Red Algae,California Spiny Chiton,1
+Asilomar 2-2-7,Medium,0.3125,0.6875,0,Green Algae,Scabra,2
+Asilomar 2-2-7,Medium,0.3125,0.6875,0,Green Algae,California Spiny Chiton,1
+Asilomar 2-2-7,Medium,0.3125,0.6875,0,Crustose Coralline Algae,Pink Volcano Barnacle,1
+Asilomar 2-3-1,Low,0,0.875,0,Hooked Slippersnail,Black Tegula,2
+Asilomar 2-3-2,Low,0,0.9375,0,Hooked Slippersnail,Black Tegula,1
+Asilomar 2-3-2,Low,0,0.9375,0,Black Limpet,Black Tegula,1
+Asilomar 2-3-2,Low,0,0.9375,0,Balanus,Black Tegula,1
+Asilomar 2-3-2,Low,0,0.9375,0,Serpulidae,Black Tegula,1
+Asilomar 2-3-2,Low,0,0.9375,0,Black Limpet,Black Tegula,1
+Asilomar 2-3-2,Low,0,0.9375,0,Tar Spot,Black Tegula,1
+Asilomar 2-3-2,Low,0,0.9375,0,Digitalis,Black Tegula,1
+Asilomar 2-3-3,Low,0,0.75,0,Digitalis,Black Tegula,2
+Asilomar 2-3-3,Low,0,0.75,0,Black Limpet,Black Tegula,1
+Asilomar 2-3-3,Low,0,0.75,0,Hooked Slippersnail,Black Tegula,4
+Asilomar 2-3-4,Low,0,0.8125,0,Digitalis,Black Tegula,1
+Asilomar 2-3-4,Low,0,0.8125,0,Scouring Pad Algae,Black Tegula,1
+Asilomar 2-3-5,Low,0,0.6875,0.0625,Tar Spot,Black Tegula,1
+Asilomar 2-3-5,Low,0,0.6875,0.0625,Black Limpet,Black Tegula,1
+Asilomar 2-3-5,Low,0,0.6875,0.0625,Digitalis,Black Tegula,1
+Asilomar 2-3-5,Low,0,0.6875,0.0625,Balanus,Black Tegula,2
+Asilomar 2-3-6,Low,0,1,0,Scouring Pad Algae,Black Tegula,1
+Asilomar 2-3-6,Low,0,1,0,Balanus,Black Tegula,1
+Asilomar 2-3-6,Low,0,1,0,Digitalis,Black Tegula,2
+Asilomar 2-3-6,Low,0,1,0,Tar Spot,Black Tegula,1
+Asilomar 2-3-7,Low,0,0.875,0,Balanus,Black Tegula,6
+Asilomar 2-3-7,Low,0,0.875,0,Black Limpet,Black Tegula,1
+Asilomar 2-3-7,Low,0,0.875,0,Hooked Slippersnail,Black Tegula,2
+Otter Cove 1-1-1,High,0.75,0.125,0.125,NA,NA,0
+Otter Cove 1-1-2,High,0.3125,0.5,0.1875,NA,NA,0
+Otter Cove 1-1-3,High,0.0625,0.875,0.0625,NA,NA,0
+Otter Cove 1-1-4,High,0.375,0.625,0,Hooked Slippersnail,Black Tegula,1
+Otter Cove 1-1-5,High,0.125,0.8125,0.0625,Hooked Slippersnail,Black Tegula,3
+Otter Cove 1-1-6,High,0.0625,0.9375,0,Hooked Slippersnail,Black Tegula,1
+Otter Cove 1-1-7,High,0,1,0,[UNK] Several Epibionts,[UNK] Several Basi,15
+Otter Cove 1-1-8,High,0.375,0.625,0,Balanus,Black Tegula,1
+Otter Cove 1-1-9,High,0.2307692308,0.7692307692,0,NA,NA,0
+Otter Cove 1-1-10,High,0.0625,0.9375,0,NA,NA,0
+Otter Cove 1-2-1,Medium,0.0625,0.9375,0,Crustose Coralline Algae,California Spiny Chiton,3
+Otter Cove 1-2-1,Medium,0.0625,0.9375,0,Filamentous Coralline Algae,California Mussel,1
+Otter Cove 1-2-1,Medium,0.0625,0.9375,0,Scouring Pad Algae,California Mussel,3
+Otter Cove 1-2-2,Medium,0.6875,0.3125,0,Mastocarpus,Black Tegula,1
+Otter Cove 1-2-3,Medium,0.625,0.375,0,Scouring Pad Algae,File Limpet,1
+Otter Cove 1-2-3,Medium,0.625,0.375,0,Crustose Coralline Algae,File Limpet,1
+Otter Cove 1-2-3,Medium,0.625,0.375,0,Digitalis,File Limpet,1
+Otter Cove 1-2-4,Medium,0.125,0.75,0,Hooked Slippersnail,Black Tegula,1
+Otter Cove 1-2-4,Medium,0.125,0.75,0,Digitalis,Black Tegula,1
+Otter Cove 1-2-5,Medium,0.1875,0.8125,0,Digitalis,Shield Limpet,1
+Otter Cove 1-2-5,Medium,0.1875,0.8125,0,Black Limpet,Shield Limpet,1
+Otter Cove 1-2-5,Medium,0.1875,0.8125,0,Crustose Coralline Algae,California Spiny Chiton,1
+Otter Cove 1-2-5,Medium,0.1875,0.8125,0,Filamentous Coralline Algae,California Mussel,1
+Otter Cove 1-2-6,Medium,0.1875,0.6875,0,Green Algae,File Limpet,1
+Otter Cove 1-2-7,Medium,0.625,0.3125,0.0625,Digitalis,Shield Limpet,1
+Otter Cove 1-2-7,Medium,0.625,0.3125,0.0625,Green Algae,File Limpet,1
+Otter Cove 1-2-7,Medium,0.625,0.3125,0.0625,Balanus,Shield Limpet,1
+Otter Cove 1-2-8,Medium,0.125,0.875,0,Mastocarpus,File Limpet,1
+Otter Cove 1-2-8,Medium,0.125,0.875,0,Gooseneck Barnacle,File Limpet,2
+Otter Cove 1-2-8,Medium,0.125,0.875,0,Digitalis,File Limpet,1
+Otter Cove 1-2-8,Medium,0.125,0.875,0,Balanus,File Limpet,3
+Otter Cove 1-2-8,Medium,0.125,0.875,0,Tar Spot,Pink Volcano Barnacle,3
+Otter Cove 1-2-9,Medium,0.125,0.875,0,Mastocarpus,Shield Limpet,3
+Otter Cove 1-2-10,Medium,0.0625,0.9375,0,Digitalis,File Limpet,3
+Otter Cove 1-2-10,Medium,0.0625,0.9375,0,Balanus,File Limpet,9
+Otter Cove 1-2-10,Medium,0.0625,0.9375,0,Scouring Pad Algae,File Limpet,2
+Otter Cove 1-3-1,Low,0,0.3125,0,NA,NA,0
+Otter Cove 1-3-2,Low,0,0.25,0,Hooked Slippersnail,Black Tegula,1
+Otter Cove 1-3-2,Low,0,0.25,0,Crustose Coralline Algae,Black Tegula,2
+Otter Cove 1-3-2,Low,0,0.25,0,Red Algae,Black Tegula,1
+Otter Cove 1-3-3,Low,0,0.875,0,Filamentous Coralline Algae,Mossy Chiton,1
+Otter Cove 1-3-3,Low,0,0.875,0,Tar Spot,Mossy Chiton,1
+Otter Cove 1-3-4,Low,0,0.1875,0,Black Limpet,Black Tegula,1
+Otter Cove 1-3-5,Low,0,0.3125,0,Digitalis,Black Tegula,1
+Otter Cove 1-3-5,Low,0,0.3125,0,Red Algae,Black Tegula,2
+Otter Cove 1-3-5,Low,0,0.3125,0,Serpulidae,Black Tegula,1
+Otter Cove 1-3-6,Low,0.2666666667,0.5333333333,0,Hooked Slippersnail,Black Tegula,1
+Otter Cove 1-3-6,Low,0.2666666667,0.5333333333,0,Serpulidae,Black Tegula,38
+Otter Cove 1-3-7,Low,0.125,0.6875,0.0625,Hooked Slippersnail,Black Tegula,1
+Otter Cove 1-3-7,Low,0.125,0.6875,0.0625,Chthamalus,Black Tegula,1
+Otter Cove 1-3-7,Low,0.125,0.6875,0.0625,Digitalis,Black Tegula,1
+Otter Cove 1-3-7,Low,0.125,0.6875,0.0625,Hooked Slippersnail,Hooked Slippersnail,1
+Otter Cove 1-3-8,Low,0,1,0,Red Algae,Black Tegula,1
+Otter Cove 1-3-8,Low,0,1,0,Black Limpet,Black Tegula,1
+Otter Cove 1-3-9,Low,0.25,0.6875,0,Hooked Slippersnail,Black Tegula,1
+Otter Cove 1-3-10,Low,0.1875,0.8125,0,Chthamalus,Black Tegula,1
+Cannery Row 1-1-1,High,0.3125,0.125,0.5625,Balanus,California Mussel,11
+Cannery Row 1-1-1,High,0.3125,0.125,0.5625,Scabra,California Mussel,3
+Cannery Row 1-1-1,High,0.3125,0.125,0.5625,Digitalis,California Mussel,2
+Cannery Row 1-1-1,High,0.3125,0.125,0.5625,Nori,California Mussel,2
+Cannery Row 1-1-2,High,0.375,0.125,0.5,Balanus,California Mussel,24
+Cannery Row 1-1-2,High,0.375,0.125,0.5,Scabra,California Mussel,1
+Cannery Row 1-1-2,High,0.375,0.125,0.5,Green Algae,File Limpet,1
+Cannery Row 1-1-2,High,0.375,0.125,0.5,Chthamalus,California Mussel,2
+Cannery Row 1-1-3,High,0.6875,0.0625,0.25,Green Algae,File Limpet,3
+Cannery Row 1-1-3,High,0.6875,0.0625,0.25,Digitalis,File Limpet,1
+Cannery Row 1-1-3,High,0.6875,0.0625,0.25,Balanus,Pink Volcano Barnacle,1
+Cannery Row 1-1-3,High,0.6875,0.0625,0.25,Balanus,File Limpet,1
+Cannery Row 1-1-4,High,0.6875,0,0.3125,NA,NA,0
+Cannery Row 1-1-5,High,0.5,0.1875,0.3125,Digitalis,Black Tegula,3
+Cannery Row 1-1-6,High,0.25,0.125,0.625,Balanus,Balanus,6
+Cannery Row 1-1-6,High,0.25,0.125,0.625,Scabra,Balanus,1
+Cannery Row 1-1-6,High,0.25,0.125,0.625,Balanus,Scabra,1
+Cannery Row 1-1-6,High,0.25,0.125,0.625,Digitalis,Balanus,1
+Cannery Row 1-1-7,High,0.3125,0,0.6875,Balanus,California Mussel,79
+Cannery Row 1-1-7,High,0.3125,0,0.6875,Digitalis,California Mussel,1
+Cannery Row 1-1-7,High,0.3125,0,0.6875,Chthamalus,California Mussel,2
+Cannery Row 1-1-7,High,0.3125,0,0.6875,Scabra,California Mussel,2
+Cannery Row 1-1-7,High,0.3125,0,0.6875,File Limpet,California Mussel,1
+Cannery Row 1-1-8,High,0.375,0.4375,0.1875,Balanus,California Mussel,50
+Cannery Row 1-1-8,High,0.375,0.4375,0.1875,Chthamalus,California Mussel,3
+Cannery Row 1-1-9,High,0.375,0.1875,0.4375,Balanus,California Mussel,30
+Cannery Row 1-1-9,High,0.375,0.1875,0.4375,Digitalis,California Mussel,1
+Cannery Row 1-1-9,High,0.375,0.1875,0.4375,Black Limpet,Black Tegula,2
+Cannery Row 1-1-10,High,0.0625,0.3125,0.625,Balanus,California Mussel,53
+Cannery Row 1-2-1,Medium,0.1875,0.8125,0,Black Limpet,Black Tegula,2
+Cannery Row 1-2-1,Medium,0.1875,0.8125,0,Black Limpet,Black Tegula,1
+Cannery Row 1-2-1,Medium,0.1875,0.8125,0,Digitalis,Black Tegula,4
+Cannery Row 1-2-2,Medium,0,1,0,Black Limpet,Black Tegula,1
+Cannery Row 1-2-2,Medium,0,1,0,Digitalis,Black Tegula,1
+Cannery Row 1-2-2,Medium,0,1,0,Hooked Slippersnail,Black Tegula,2
+Cannery Row 1-2-3,Medium,0.1875,0.8125,0,Hooked Slippersnail,Black Tegula,6
+Cannery Row 1-2-3,Medium,0.1875,0.8125,0,Digitalis,Black Tegula,2
+Cannery Row 1-2-3,Medium,0.1875,0.8125,0,Black Limpet,Black Tegula,2
+Cannery Row 1-2-4,Medium,0.0625,0.875,0.0625,Black Limpet,Black Tegula,2
+Cannery Row 1-2-4,Medium,0.0625,0.875,0.0625,Black Limpet,Black Tegula,1
+Cannery Row 1-2-4,Medium,0.0625,0.875,0.0625,Red Algae,Black Tegula,1
+Cannery Row 1-2-5,Medium,0,1,0,Black Limpet,Black Tegula,1
+Cannery Row 1-2-5,Medium,0,1,0,Hooked Slippersnail,Black Tegula,1
+Cannery Row 1-2-5,Medium,0,1,0,Balanus,Black Tegula,1
+Cannery Row 1-2-6,Medium,0.0625,0.875,0,Digitalis,Black Tegula,1
+Cannery Row 1-2-6,Medium,0.0625,0.875,0,Tar Spot,Brown Tegula,1
+Cannery Row 1-2-7,Medium,0,1,0,Mastocarpus,Black Tegula,1
+Cannery Row 1-2-7,Medium,0,1,0,Black Limpet,Black Tegula,1
+Cannery Row 1-2-7,Medium,0,1,0,Tar Spot,Black Tegula,1
+Cannery Row 1-2-7,Medium,0,1,0,Mastocarpus,Black Tegula,1
+Cannery Row 1-2-7,Medium,0,1,0,Black Limpet,Black Tegula,1
+Cannery Row 1-2-7,Medium,0,1,0,Tar Spot,Black Tegula,1
+Cannery Row 1-2-8,Medium,0,1,0,Black Limpet,Black Tegula,1
+Cannery Row 1-2-8,Medium,0,1,0,Digitalis,Black Tegula,1
+Cannery Row 1-2-9,Medium,0,1,0,Black Limpet,Black Tegula,2
+Cannery Row 1-2-9,Medium,0,1,0,Hooked Slippersnail,Black Tegula,2
+Cannery Row 1-2-9,Medium,0,1,0,Balanus,Black Tegula,1
+Cannery Row 1-2-10,Medium,0,1,0,Digitalis,Black Tegula,4
+Cannery Row 1-3-1,Low,0.3125,0.5,0.0625,Hooked Slippersnail,Hooked Slippersnail,2
+Cannery Row 1-3-1,Low,0.3125,0.5,0.0625,Hooked Slippersnail,Black Tegula,3
+Cannery Row 1-3-1,Low,0.3125,0.5,0.0625,Black Limpet,Black Tegula,1
+Cannery Row 1-3-1,Low,0.3125,0.5,0.0625,Digitalis,Black Tegula,1
+Cannery Row 1-3-2,Low,0.25,0.375,0,NA,NA,0
+Cannery Row 1-3-3,Low,0.125,0.5,0.125,Hooked Slippersnail,Hooked Slippersnail,1
+Cannery Row 1-3-3,Low,0.125,0.5,0.125,Balanus,Black Tegula,7
+Cannery Row 1-3-3,Low,0.125,0.5,0.125,Black Limpet,Black Tegula,1
+Cannery Row 1-3-3,Low,0.125,0.5,0.125,Digitalis,Black Tegula,1
+Cannery Row 1-3-3,Low,0.125,0.5,0.125,Tar Spot,Black Tegula,2
+Cannery Row 1-3-4,Low,0.25,0.625,0.125,Hooked Slippersnail,Hooked Slippersnail,1
+Cannery Row 1-3-4,Low,0.25,0.625,0.125,Hooked Slippersnail,Black Tegula,3
+Cannery Row 1-3-4,Low,0.25,0.625,0.125,Balanus,Black Tegula,2
+Cannery Row 1-3-4,Low,0.25,0.625,0.125,Tar Spot,Black Tegula,1
+Cannery Row 1-3-5,Low,0.375,0.3125,0.0625,Hooked Slippersnail,Hooked Slippersnail,2
+Cannery Row 1-3-5,Low,0.375,0.3125,0.0625,Hooked Slippersnail,Black Tegula,3
+Cannery Row 1-3-5,Low,0.375,0.3125,0.0625,Digitalis,Black Tegula,2
+Cannery Row 1-3-6,Low,0.25,0.5625,0.125,Hooked Slippersnail,Hooked Slippersnail,2
+Cannery Row 1-3-6,Low,0.25,0.5625,0.125,Hooked Slippersnail,Black Tegula,4
+Cannery Row 1-3-6,Low,0.25,0.5625,0.125,Balanus,Black Tegula,2
+Cannery Row 1-3-6,Low,0.25,0.5625,0.125,Black Limpet,Black Tegula,1
+Cannery Row 1-3-7,Low,0.0625,0.625,0,Black Limpet,Black Tegula,1
+Cannery Row 1-3-7,Low,0.0625,0.625,0,Red Algae,Black Tegula,1
+Cannery Row 1-3-8,Low,0.1875,0.5,0.25,[UNK] Several Epibionts,[UNK] Several Basi,19
+Cannery Row 1-3-9,Low,0.0625,0.9375,0,[UNK] Several Epibionts,[UNK] Several Basi,13
+Cannery Row 1-3-10,Low,0.25,0.6875,0,[UNK] Several Epibionts,[UNK] Several Basi,7
+Lovers Point 1-1-1,High,0.0625,0,0.9375,Tar Spot,Balanus,27
+Lovers Point 1-1-1,High,0.0625,0,0.9375,Balanus,Balanus,27
+Lovers Point 1-1-1,High,0.0625,0,0.9375,Mastocarpus,Balanus,5
+Lovers Point 1-1-2,High,0,0,1,Balanus,Balanus,24
+Lovers Point 1-1-2,High,0,0,1,Chthamalus,Striped Dogwinkle,1
+Lovers Point 1-1-2,High,0,0,1,Balanus,Scabra,1
+Lovers Point 1-1-2,High,0,0,1,Scabra,Balanus,1
+Lovers Point 1-1-3,High,0.375,0.1875,0.4375,Balanus,Scabra,1
+Lovers Point 1-1-3,High,0.375,0.1875,0.4375,Crustose Coralline Algae,California Spiny Chiton,1
+Lovers Point 1-1-4,High,0.25,0,0.75,Digitalis,Balanus,1
+Lovers Point 1-1-4,High,0.25,0,0.75,Balanus,Balanus,3
+Lovers Point 1-1-5,High,0.5,0.125,0.375,Mastocarpus,Pink Volcano Barnacle,1
+Lovers Point 1-1-5,High,0.5,0.125,0.375,Balanus,California Mussel,19
+Lovers Point 1-1-5,High,0.5,0.125,0.375,Chthamalus,California Mussel,6
+Lovers Point 1-1-6,High,0.3125,0,0.6875,Scouring Pad Algae,California Mussel,1
+Lovers Point 1-1-6,High,0.3125,0,0.6875,Balanus,California Mussel,11
+Lovers Point 1-1-6,High,0.3125,0,0.6875,Digitalis,California Mussel,1
+Lovers Point 1-1-6,High,0.3125,0,0.6875,Black Limpet,California Mussel,5
+Lovers Point 1-1-6,High,0.3125,0,0.6875,Chthamalus,Emarginate Dogwinkle,1
+Lovers Point 1-1-7,High,0.4375,0.5625,0,Green Algae,Scabra,4
+Lovers Point 1-2-1,Medium,0.5,0.375,0.125,Black Limpet,California Mussel,3
+Lovers Point 1-2-1,Medium,0.5,0.375,0.125,Balanus,File Limpet,1
+Lovers Point 1-2-2,Medium,0.875,0,0.125,Balanus,Black Tegula,5
+Lovers Point 1-2-2,Medium,0.875,0,0.125,Black Limpet,Black Tegula,1
+Lovers Point 1-2-3,Medium,0.1875,0,0.8125,Balanus,File Limpet,1
+Lovers Point 1-2-3,Medium,0.1875,0,0.8125,Digitalis,File Limpet,2
+Lovers Point 1-2-3,Medium,0.1875,0,0.8125,Balanus,Pink Volcano Barnacle,1
+Lovers Point 1-2-3,Medium,0.1875,0,0.8125,Digitalis,Black Tegula,3
+Lovers Point 1-2-3,Medium,0.1875,0,0.8125,Balanus,Black Tegula,1
+Lovers Point 1-2-3,Medium,0.1875,0,0.8125,Balanus,California Mussel,7
+Lovers Point 1-2-4,Medium,0.5,0,0.5,Digitalis,File Limpet,1
+Lovers Point 1-2-4,Medium,0.5,0,0.5,Digitalis,California Mussel,1
+Lovers Point 1-2-4,Medium,0.5,0,0.5,Balanus,California Mussel,4
+Lovers Point 1-2-4,Medium,0.5,0,0.5,Balanus,Pink Volcano Barnacle,1
+Lovers Point 1-2-5,Medium,0.3333333333,0.1666666667,0.5000000001,Balanus,California Mussel,10
+Lovers Point 1-2-5,Medium,0.3333333333,0.1666666667,0.5000000001,Digitalis,Striped Dogwinkle,1
+Lovers Point 1-2-6,Medium,0.3125,0,0.6875,Digitalis,Pink Volcano Barnacle,12
+Lovers Point 1-2-6,Medium,0.3125,0,0.6875,Balanus,Pink Volcano Barnacle,9
+Lovers Point 1-2-6,Medium,0.3125,0,0.6875,Digitalis,Black Tegula,1
+Lovers Point 1-2-6,Medium,0.3125,0,0.6875,Black Limpet,Pink Volcano Barnacle,1
+Lovers Point 1-2-7,Medium,0.4375,0,0.5625,Black Limpet,California Mussel,4
+Lovers Point 1-2-7,Medium,0.4375,0,0.5625,Digitalis,California Mussel,3
+Lovers Point 1-2-7,Medium,0.4375,0,0.5625,Balanus,California Mussel,5
+Lovers Point 1-3-1,Low,0.125,0.625,0.1875,Variegate Amphissa,California Mussel,73
+Lovers Point 1-3-1,Low,0.125,0.625,0.1875,Black Limpet,California Mussel,1
+Lovers Point 1-3-2,Low,0.5625,0.125,0.3125,Balanus,California Mussel,16
+Lovers Point 1-3-2,Low,0.5625,0.125,0.3125,Beauty Bush Algae,California Mussel,3
+Lovers Point 1-3-2,Low,0.5625,0.125,0.3125,Black Limpet,Black Tegula,1
+Lovers Point 1-3-2,Low,0.5625,0.125,0.3125,Digitalis,California Mussel,1
+Lovers Point 1-3-3,Low,0.1875,0.375,0.4375,Crustose Coralline Algae,Whitecap Limpet,1
+Lovers Point 1-3-3,Low,0.1875,0.375,0.4375,Balanus,California Mussel,6
+Lovers Point 1-3-3,Low,0.1875,0.375,0.4375,Hooked Slippersnail,Black Tegula,1
+Lovers Point 1-3-3,Low,0.1875,0.375,0.4375,Black Limpet,Hooked Slippersnail,1
+Lovers Point 1-3-4,Low,0.1875,0.5625,0.25,Chthamalus,California Mussel,29
+Lovers Point 1-3-4,Low,0.1875,0.5625,0.25,Balanus,California Mussel,2
+Lovers Point 1-3-4,Low,0.1875,0.5625,0.25,Black Limpet,California Mussel,4
+Lovers Point 1-3-4,Low,0.1875,0.5625,0.25,Variegate Amphissa,California Mussel,6
+Lovers Point 1-3-4,Low,0.1875,0.5625,0.25,Black Limpet,Gooseneck Barnacle,3
+Lovers Point 1-3-5,Low,0.125,0.0625,0.8125,Pink Volcano Barnacle,Pink Volcano Barnacle,2
+Lovers Point 1-3-5,Low,0.125,0.0625,0.8125,Balanus,Pink Volcano Barnacle,15
+Lovers Point 1-3-5,Low,0.125,0.0625,0.8125,Scabra,Pink Volcano Barnacle,1
+Lovers Point 1-3-5,Low,0.125,0.0625,0.8125,Balanus,California Mussel,7
+Lovers Point 1-3-5,Low,0.125,0.0625,0.8125,Black Limpet,California Mussel,5
+Lovers Point 1-3-5,Low,0.125,0.0625,0.8125,Filamentous Coralline Algae,Pink Volcano Barnacle,4
+Lovers Point 1-3-5,Low,0.125,0.0625,0.8125,Black Limpet,Pink Volcano Barnacle,1
+Lovers Point 1-3-5,Low,0.125,0.0625,0.8125,Scabra,Black Tegula,1
+Lovers Point 1-3-5,Low,0.125,0.0625,0.8125,Balanus,Black Tegula,1
+Lovers Point 1-3-6,Low,0.1875,0.0625,0.75,Balanus,Pink Volcano Barnacle,2
+Lovers Point 1-3-6,Low,0.1875,0.0625,0.75,Balanus,California Mussel,20
+Lovers Point 1-3-6,Low,0.1875,0.0625,0.75,Chthamalus,California Mussel,65
+Lovers Point 1-3-6,Low,0.1875,0.0625,0.75,Black Limpet,California Mussel,11
+Lovers Point 1-3-6,Low,0.1875,0.0625,0.75,Digitalis,California Mussel,1
+Lovers Point 1-3-6,Low,0.1875,0.0625,0.75,Scabra,Black Tegula,1
+Lovers Point 1-3-6,Low,0.1875,0.0625,0.75,Black Limpet,Black Tegula,1
+Lovers Point 1-3-6,Low,0.1875,0.0625,0.75,Pink Volcano Barnacle,California Mussel,1
+Lovers Point 1-3-7,Low,0,0,1,Digitalis,Circled Rocksnail,1
+Lovers Point 1-3-7,Low,0,0,1,Tar Spot,Balanus,30
+Lovers Point 1-3-7,Low,0,0,1,Scabra,Balanus,3
+Lovers Point 1-3-7,Low,0,0,1,Pink Volcano Barnacle,Balanus,4
+Lovers Point 1-3-7,Low,0,0,1,Digitalis,Balanus,2
+Lovers Point 1-3-7,Low,0,0,1,Chthamalus,California Mussel,35
+Lovers Point 1-3-7,Low,0,0,1,Balanus,California Mussel,16
+Lovers Point 1-3-7,Low,0,0,1,Black Limpet,California Mussel,3
+Cannery Row 2-1-1,High,0.5625,0.4375,0,Black Limpet,Black Tegula,1
+Cannery Row 2-1-1,High,0.5625,0.4375,0,Hooked Slippersnail,Black Tegula,1
+Cannery Row 2-1-2,High,0.75,0.25,0,NA,NA,0
+Cannery Row 2-1-3,High,0.125,0.1875,0.6875,Digitalis,Black Tegula,2
+Cannery Row 2-1-4,High,0.625,0.375,0,NA,NA,0
+Cannery Row 2-1-5,High,0.625,0.3125,0,NA,NA,0
+Cannery Row 2-2-1,Medium,0.1875,0.8125,0,Hooked Slippersnail,Black Tegula,2
+Cannery Row 2-2-1,Medium,0.1875,0.8125,0,Black Limpet,Black Tegula,2
+Cannery Row 2-2-1,Medium,0.1875,0.8125,0,Hooked Slippersnail,Brown Tegula,2
+Cannery Row 2-2-2,Medium,0.0625,0.9375,0,Digitalis,Shield Limpet,4
+Cannery Row 2-2-3,Medium,0,0.9375,0.0625,Serpulidae,California Mussel,74
+Cannery Row 2-2-3,Medium,0,0.9375,0.0625,Hooked Slippersnail,Black Tegula,3
+Cannery Row 2-2-3,Medium,0,0.9375,0.0625,Balanus,Black Tegula,1
+Cannery Row 2-2-4,Medium,0.1875,0.8125,0,Black Limpet,Black Tegula,2
+Cannery Row 2-2-4,Medium,0.1875,0.8125,0,Red Algae,Black Tegula,1
+Cannery Row 2-2-4,Medium,0.1875,0.8125,0,Balanus,Black Tegula,1
+Cannery Row 2-2-4,Medium,0.1875,0.8125,0,Digitalis,Black Tegula,1
+Cannery Row 2-2-5,Medium,0.3125,0.6875,0,Tar Spot,Brown Tegula,1
+Cannery Row 2-2-5,Medium,0.3125,0.6875,0,Hooked Slippersnail,Black Tegula,1
+Cannery Row 2-2-5,Medium,0.3125,0.6875,0,Black Limpet,Black Tegula,1
+Cannery Row 2-2-5,Medium,0.3125,0.6875,0,Balanus,Black Tegula,1
+Cannery Row 2-3-1,Low,0,1,0,Digitalis,Black Tegula,1
+Cannery Row 2-3-1,Low,0,1,0,Hooked Slippersnail,Black Tegula,1
+Cannery Row 2-3-1,Low,0,1,0,Black Limpet,Black Tegula,1
+Cannery Row 2-3-1,Low,0,1,0,Serpulidae,Black Tegula,9
+Cannery Row 2-3-1,Low,0,1,0,Black Limpet,Black Tegula,1
+Cannery Row 2-3-2,Low,0,1,0,Red Algae,Black Tegula,1
+Cannery Row 2-3-2,Low,0,1,0,Tar Spot,Volcano Keyhole Limpet,1
+Cannery Row 2-3-2,Low,0,1,0,Crustose Coralline Algae,Volcano Keyhole Limpet,1
+Cannery Row 2-3-2,Low,0,1,0,Black Limpet,Black Tegula,1
+Cannery Row 2-3-3,Low,0,1,0,Digitalis,Black Tegula,2
+Cannery Row 2-3-3,Low,0,1,0,Crustose Coralline Algae,California Mussel,1
+Cannery Row 2-3-4,Low,0,1,0,Red Algae,Black Tegula,1
+Cannery Row 2-3-4,Low,0,1,0,Hooked Slippersnail,Black Tegula,1
+Cannery Row 2-3-5,Low,0,1,0,Hooked Slippersnail,Carinate Dovesnail,1
+Cannery Row 2-3-5,Low,0,1,0,Serpulidae,Black Tegula,1
+Carmel Point 1-1-1,High,0.4375,0.5625,0,Black Limpet,Black Tegula,1
+Carmel Point 1-1-1,High,0.4375,0.5625,0,File Limpet,Black Tegula,2
+Carmel Point 1-1-1,High,0.4375,0.5625,0,Microcionidae,Pink Volcano Barnacle,2
+Carmel Point 1-1-1,High,0.4375,0.5625,0,Crustose Coralline Algae,Pink Volcano Barnacle,5
+Carmel Point 1-1-1,High,0.4375,0.5625,0,Crustose Coralline Algae,Balanus,1
+Carmel Point 1-1-2,High,0.375,0.5625,0.0625,Pink Volcano Barnacle,Pink Volcano Barnacle,13
+Carmel Point 1-1-2,High,0.375,0.5625,0.0625,Filamentous Coralline Algae,Volcano Keyhole Limpet,2
+Carmel Point 1-1-2,High,0.375,0.5625,0.0625,Chthamalus,Black Tegula,5
+Carmel Point 1-1-2,High,0.375,0.5625,0.0625,Mastocarpus,Volcano Keyhole Limpet,1
+Carmel Point 1-1-2,High,0.375,0.5625,0.0625,Hooked Slippersnail,Black Tegula,1
+Carmel Point 1-1-3,High,0.375,0.5625,0.0625,Scouring Pad Algae,Pink Volcano Barnacle,1
+Carmel Point 1-1-3,High,0.375,0.5625,0.0625,Hooked Slippersnail,Black Tegula,1
+Carmel Point 1-1-3,High,0.375,0.5625,0.0625,Hooked Slippersnail,Hooked Slippersnail,1
+Carmel Point 1-1-3,High,0.375,0.5625,0.0625,Mastocarpus,California Mussel,4
+Carmel Point 1-1-4,High,0.1875,0.5625,0.25,Green Algae,Scabra,3
+Carmel Point 1-1-4,High,0.1875,0.5625,0.25,Chthamalus,Chthamalus,1
+Carmel Point 1-1-4,High,0.1875,0.5625,0.25,Tar Spot,Chthamalus,3
+Carmel Point 1-1-4,High,0.1875,0.5625,0.25,Chthamalus,Black Tegula,3
+Carmel Point 1-1-4,High,0.1875,0.5625,0.25,Digitalis,Black Tegula,1
+Carmel Point 1-1-4,High,0.1875,0.5625,0.25,Black Limpet,Black Tegula,1
+Carmel Point 1-1-4,High,0.1875,0.5625,0.25,Scabra,Green Falsejingle,2
+Carmel Point 1-1-4,High,0.1875,0.5625,0.25,Balanus,Green Falsejingle,1
+Carmel Point 1-1-4,High,0.1875,0.5625,0.25,Filamentous Coralline Algae,Green Falsejingle,1
+Carmel Point 1-1-4,High,0.1875,0.5625,0.25,Crustose Coralline Algae,Green Falsejingle,3
+Carmel Point 1-1-5,High,0.375,0.125,0.25,Tar Spot,Chthamalus,3
+Carmel Point 1-1-5,High,0.375,0.125,0.25,Chthamalus,Chthamalus,2
+Carmel Point 1-1-5,High,0.375,0.125,0.25,Crepidula norrisiarum,Black Tegula,2
+Carmel Point 1-1-5,High,0.375,0.125,0.25,Hooked Slippersnail,Crepidula norrisiarum,1
+Carmel Point 1-2-1,Medium,0.5,0.4375,0.0625,NA,NA,0
+Carmel Point 1-2-2,Medium,0.375,0.4375,0.125,NA,NA,0
+Carmel Point 1-2-3,Medium,0.8125,0,0.125,NA,NA,0
+Carmel Point 1-2-4,Medium,0.625,0.1875,0.125,NA,NA,0
+Carmel Point 1-2-5,Medium,0.5625,0.4375,0,NA,NA,0
+Carmel Point 1-3-1,Low,0.375,0.3125,0.125,NA,NA,0
+Carmel Point 1-3-2,Low,0.375,0.375,0.125,NA,NA,0
+Carmel Point 1-3-3,Low,0.0625,0.8125,0,NA,NA,0
+Carmel Point 1-3-4,Low,0.5625,0.25,0.125,NA,NA,0
+Carmel Point 1-3-5,Low,0.625,0.375,0,NA,NA,0

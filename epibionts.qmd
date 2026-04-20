@@ -1,0 +1,255 @@
+---
+title: "Epibionts Honors Capstone Project"
+author: "Tyler Busby"
+format: html
+---
+
+# Loading Packages
+
+```{r}
+library(tidyverse)
+library(car)
+library(ggalluvial)
+library(mosaic)
+library(patchwork)
+```
+
+
+# Loading the Data
+
+```{r}
+cover <- read_csv("raw-data/Epibiont Survey Data Entry - Percent Ground Cover.csv", 
+                  skip = 1)
+counts <- read_csv("raw-data/Epibiont Survey Data Entry - Epibiont Counts.csv")
+names <- read_csv("raw-data/Epibiont Survey Data Entry - Names and IDs.csv")
+```
+
+
+# Creating Clean Counts Dataset
+
+```{r}
+counts_clean <- counts |> 
+  unite(code, 1:3, sep = "-", remove = TRUE, na.rm = FALSE) |>  # creating code variable for each quadrat
+  janitor::clean_names() |>                                     # cleaning column names
+  select(c(code, epibiont, basibiont, count))                   # selecting only needed columns
+```
+
+
+# Creating Clean Cover Dataset
+
+```{r}
+cover_clean_names <- cover |>
+  janitor::clean_names() |>                                                 # cleaning column names
+  rename("site" = x1) |>
+  rename("transect" = x2) |>
+  rename("quad" = x3) |>
+  rename("height" = x4) |>                                                  # renaming first four columns
+  mutate(height = fct_relevel(height, "Low", "Medium", "High")) |>          # ordering height variable
+  drop_na(site)                                                             # removes cases with no marked site
+```
+
+
+# Finding Sites with Incomplete Data
+
+```{r}
+no_site_height <- cover_clean_names |>
+  group_by(site, height) |>
+  summarize(no_quadrats = n())                    # Calculating number of quadrats in each site and height
+
+no_site_height |>
+  ggplot(aes(x = height, y = no_quadrats)) +
+  geom_col() +                                    # creating bar plot of the number of quadrats by tidal height
+  facet_wrap(~site) +                             # faceting by site
+  theme_bw() +                                    # changing visual theme
+  labs(x = "Tidal Height",
+       y = "Quadrat Count")                       # adding new labels
+```
+
+
+# Creating Full Clean Dataset
+
+```{r}
+full_cover_clean <- cover_clean_names |>
+  filter(site != "Asilomar 3" &
+         site != "Cannery Row 3" &
+         site != "Great Tidepool 2" &
+         site != "Pacific Grove 1") |>                                      # removing site with no
+  unite(code, 1:3, sep = "-", remove = TRUE, na.rm = FALSE) |>              # creating code variable
+  group_by(code) |>                                                         # grouping to help with later code
+  mutate(algae_cover = 
+           sum(c_across(filamentous_turf:surfgrass), na.rm = T)) |>         # adding cover of all algae
+  mutate(sessile_invert_cover = 
+           sum(c_across(pink_volcano_barnacle:serpulidae), na.rm = T)) |>   # adding cover of all sessile inverts
+  select(code, height, bare_rock, algae_cover, sessile_invert_cover)     # selecting only needed columns
+  
+epibiosis_clean <- full_cover_clean |>
+  left_join(counts_clean, by = "code") |>                                   # combining with counts by code
+  mutate(across(is.numeric, ~replace_na(., 0)))                             # replacing NAs with 0s
+
+write_csv(epibiosis_clean, file = "clean-data/epibiosis_clean.csv")         # save new clean csv
+```
+
+
+# Determining Most Common Basibionts (1)
+
+```{r}
+epibiosis_clean |>
+  group_by(basibiont) |>
+  summarize(count = sum(count)) |>
+  filter(basibiont  != "[UNK] Several Basi") |>
+  ggplot() +
+  geom_col(aes(y = count, 
+               x = fct_reorder(basibiont, -count), 
+               fill = fct_reorder(basibiont, -count))) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.3, size = 8)) +
+  labs(x = "Basibiont",
+       y = "Total Epibiont Count") +
+  scale_fill_manual(values = c("#08519C", "#3182BD", "#6BAED6", "#BDD7E7", "Gray", "Gray", "Gray", "Gray", "Gray",
+                               "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray",
+                               "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray")) +
+  scale_y_continuous(limits = c(0, 1250), expand = c(0, 0), breaks = c(0, 300, 600, 900, 1200)) +
+  guides(fill = "none")
+```
+
+
+# Running Full Poisson Model, Determining Relevant Stats
+
+```{r}
+# Summarizing data by code. Other variables added to keep them after summarize function is run
+epibiosis_clean_combined <- epibiosis_clean |>
+  group_by(code, height, algae_cover, bare_rock, sessile_invert_cover) |>
+  summarize(count = sum(count)) |>
+  ungroup()
+
+# Running full model with interaction terms
+epibiont_model <- glm(formula = count ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock +
+                        bare_rock*factor(height) + sessile_invert_cover*factor(height) +
+                        algae_cover*factor(height),
+                      family = quasipoisson(link = log),
+                      data = epibiosis_clean_combined)
+
+# Summarizing model
+summary(epibiont_model)
+
+# Testing for collinearity
+vif(epibiont_model)
+```
+
+
+## Testing New Model with Interaction Terms Centered
+```{r}
+# Centering collinear variables
+epibiosis_centered <- epibiosis_clean_combined |>
+  mutate(bare_rock_cent = bare_rock - mean(bare_rock)) |>
+  mutate(sess_inv_cent = sessile_invert_cover - mean(sessile_invert_cover)) |>
+  mutate(algae_cent = algae_cover - mean(algae_cover))
+
+# Rerunning model  
+epibiont_model2 <- glm(formula = count ~ factor(height) + sess_inv_cent + algae_cent + bare_rock_cent +
+                        bare_rock_cent*factor(height) + sess_inv_cent*factor(height) +
+                        algae_cent*factor(height),
+                      family = quasipoisson(link = log),
+                      data = epibiosis_centered)
+
+# Summarizing new model
+summary(epibiont_model2)
+
+# Testing collinearity of new model
+vif(epibiont_model2)
+```
+
+
+## Testing model with no interaction terms
+```{r}
+# Running full model with interaction terms
+epibiont_model3 <- glm(formula = count ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock,
+                      family = quasipoisson(link = log),
+                      data = epibiosis_clean_combined)
+
+# Summarizing model
+summary(epibiont_model3)
+
+# Testing for collinearity
+vif(epibiont_model3)
+
+# Testing which model is better
+anova(epibiont_model3, epibiont_model, test = "F")
+```
+
+Interaction model is not significantly better. So we're running the model with no interactions
+
+
+## Separating Full Dataset by Sessile and Motile Basibionts
+
+```{r}
+unique(epibiosis_clean$basibiont)
+
+sess_mot <- epibiosis_clean |>
+  drop_na(basibiont) |>
+  mutate(
+    basibiont = fct_collapse(as.factor(basibiont),
+                `Highly Motile` = c("Black Tegula", "Brown Tegula", "Tegula sp.", "Nucella", "Littorina",
+                                    "Striped Dogwinkle", "Emarginate Dogwinkle", "Circled Rocksnail",
+                                    "Carinate Dovesnail"),
+                Sedentary = c("Black Limpet", "Shield Limpet", "Scabra", "Digitalis", "Plate Limpet",
+                              "File Limpet", "Whitecap Limpet", "Hooked Slippersnail", "Crepidula norrisiarum", 
+                              "Volcano Keyhole Limpet", "California Spiny Chiton", "Mossy Chiton"),
+                Sessile = c("Gooseneck Barnacle", "Pink Volcano Barnacle", "Balanus", "Chthamalus",
+                            "California Mussel", "Scaled Wormsnail", "Green Falsejingle"),
+                Other = c("[UNK] Several Basi", NA))) |>
+  group_by(code, height, algae_cover, bare_rock, sessile_invert_cover, basibiont) |>
+  summarize(count = sum(count)) |>
+  ungroup() |>
+  filter(basibiont != "Other")
+```
+
+
+# Motile/Sessile Basibionts Boxplot
+
+```{r}
+sess_mot |>
+  ggplot(aes(y = count, x = fct_relevel(height, "Low", "Medium", "High"))) +
+  geom_boxplot(outliers = F) +
+  geom_jitter(alpha = 0.4, width = 0.2, aes(color = fct_relevel(height, "Low", "Medium", "High"))) +
+  facet_wrap(~fct_relevel(basibiont, "Sessile", "Sedentary", "Highly Motile")) +
+  scale_y_log10() +
+  theme_bw() +
+  labs(x = "Tidal Level",
+       y = "Epibiont Count") +
+  scale_color_viridis_d() +
+  guides(color = "none")
+```
+
+
+## Running Sessile-Only Poisson Model, Determining Relevant Stats
+
+```{r}
+epi_sess_only <- sess_mot |>
+  filter(basibiont == "Sessile")
+
+sess_only_model <- glm(formula = count ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock,
+                              family = quasipoisson(link = log),
+                              data = epi_sess_only)
+
+summary(sess_only_model)
+vif(sess_only_model)
+```
+
+
+## Running Motile-Only Possion Model, Determining Relevant Stats
+
+```{r}
+epi_mot_only <- sess_mot |>
+  filter(basibiont == "Highly Motile")
+
+mot_only_model <- glm(formula = count ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock,
+                              family = quasipoisson(link = log),
+                              data = epi_mot_only)
+
+summary(mot_only_model)
+vif(mot_only_model)
+
+# not sure what this means for our data
+```
+
