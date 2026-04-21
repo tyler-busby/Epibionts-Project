@@ -56,7 +56,7 @@ cover_clean_names <- cover |>
 ```{r}
 no_site_height <- cover_clean_names |>
   group_by(site, height) |>
-  summarize(no_quadrats = n())                    # Calculating number of quadrats in each site and height
+  summarize(no_quadrats = n())                    # calculating number of quadrats in each site and height
 
 no_site_height |>
   ggplot(aes(x = height, y = no_quadrats)) +
@@ -71,38 +71,39 @@ no_site_height |>
 # Creating Map from Shapefile
 
 ```{r, fig.width=6.5, fig.height=4.75}
-MB_shapefile <- st_read("raw-data/utexaustin_data/Regional_Park_Districts.shp")
+MB_shapefile <- st_read("raw-data/utexaustin_data/Regional_Park_Districts.shp") # loading shapefile
 
-sites <- read_csv("raw-data/sample_site_coords.csv") |>
-  janitor::clean_names() |>
-  filter(sample_location != "Cannery Row 2") |>  # Combining Cannery Row 1 and 2 to prevent overlap
+sites <- read_csv("raw-data/sample_site_coords.csv") |>   # loading coordinate data
+  janitor::clean_names() |>                       # cleaning names
+  filter(sample_location != "Cannery Row 2") |>   # combining Cannery Row 1 and 2 to prevent overlap
   mutate(site_sample_number = ifelse(site == "Cannery Row", "1, 2", site_sample_number))
   
 
-ggplot(MB_shapefile) +
-  geom_sf() +
+ggplot(MB_shapefile) +                                                      # creating plot using shapefile
+  geom_sf() +                                                               # adding points from coord data
   geom_point(data = sites, 
              aes(x = longitude, y = latitude, color = site),
              size = 2) +
-  geom_label(data = sites, 
+  geom_label(data = sites,                                                  # adding labels from coord data
              aes(x = longitude, y = latitude, fill = site, label = site_sample_number),
-             alpha = 0.7, vjust = -0.25, hjust = 1, size = 2.5) +
-  coord_sf(xlim = c(-122, -121.86), ylim = c(36.54, 36.65), expand = FALSE) +
-  labs(x = "Longitude",
+             alpha = 0.7, vjust = -0.25, hjust = 1.1, size = 2.5) +
+  coord_sf(xlim = c(-122, -121.86), ylim = c(36.54, 36.65),                 # zooming into the peninsula
+           expand = FALSE) +
+  labs(x = "Longitude",                                                     # adding axis labels and title
        y = "Latitude",
        color = "Site:",
        title = "Intertidal Sampling Sites Along the Monterey Peninsula") +
-  theme_bw() +
+  theme_bw() +                                                              # changing theme
   scale_x_continuous(breaks = c(-122, -121.965, -121.93, -121.895, -121.86)) +
-  scale_y_continuous(breaks = c(36.54, 36.5675, 36.595, 36.6225, 36.65)) +
-  annotation_scale(location = "br", width_hint = 0.4) +
-  annotation_north_arrow(location = "br", which_north = "true",
+  scale_y_continuous(breaks = c(36.54, 36.5675, 36.595, 36.6225, 36.65)) +  # altering axis breaks
+  annotation_scale(location = "br", width_hint = 0.4) +                     # adding scale
+  annotation_north_arrow(location = "br", which_north = "true",             # adding compass heading
                          height = unit(3, "cm"), width = unit(3, "cm"), 
-                         pad_y = unit(0.5, "cm"), pad_x = unit(0.34, "cm"),
+                         pad_y = unit(0.5, "cm"), pad_x = unit(0.4, "cm"),
                          style = north_arrow_fancy_orienteering) +
-  guides(fill = "none")
+  guides(fill = "none")                                                     # removing fill guide
 
-ggsave("photos/site_map")
+ggsave("photos/site_map.png", width = 6.5, height = 4.75)                   # saving map as photo
 ```
 
 
