@@ -12,6 +12,8 @@ library(car)
 library(ggalluvial)
 library(mosaic)
 library(patchwork)
+library(sf)
+library(ggspatial)
 ```
 
 
@@ -63,6 +65,44 @@ no_site_height |>
   theme_bw() +                                    # changing visual theme
   labs(x = "Tidal Height",
        y = "Quadrat Count")                       # adding new labels
+```
+
+
+# Creating Map from Shapefile
+
+```{r, fig.width=6.5, fig.height=4.75}
+MB_shapefile <- st_read("raw-data/utexaustin_data/Regional_Park_Districts.shp")
+
+sites <- read_csv("raw-data/sample_site_coords.csv") |>
+  janitor::clean_names() |>
+  filter(sample_location != "Cannery Row 2") |>  # Combining Cannery Row 1 and 2 to prevent overlap
+  mutate(site_sample_number = ifelse(site == "Cannery Row", "1, 2", site_sample_number))
+  
+
+ggplot(MB_shapefile) +
+  geom_sf() +
+  geom_point(data = sites, 
+             aes(x = longitude, y = latitude, color = site),
+             size = 2) +
+  geom_label(data = sites, 
+             aes(x = longitude, y = latitude, fill = site, label = site_sample_number),
+             alpha = 0.7, vjust = -0.25, hjust = 1, size = 2.5) +
+  coord_sf(xlim = c(-122, -121.86), ylim = c(36.54, 36.65), expand = FALSE) +
+  labs(x = "Longitude",
+       y = "Latitude",
+       color = "Site:",
+       title = "Intertidal Sampling Sites Along the Monterey Peninsula") +
+  theme_bw() +
+  scale_x_continuous(breaks = c(-122, -121.965, -121.93, -121.895, -121.86)) +
+  scale_y_continuous(breaks = c(36.54, 36.5675, 36.595, 36.6225, 36.65)) +
+  annotation_scale(location = "br", width_hint = 0.4) +
+  annotation_north_arrow(location = "br", which_north = "true",
+                         height = unit(3, "cm"), width = unit(3, "cm"), 
+                         pad_y = unit(0.5, "cm"), pad_x = unit(0.34, "cm"),
+                         style = north_arrow_fancy_orienteering) +
+  guides(fill = "none")
+
+ggsave("photos/site_map")
 ```
 
 
