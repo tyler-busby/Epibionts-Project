@@ -10,10 +10,12 @@ format: html
 library(tidyverse)
 library(car)
 library(ggalluvial)
+library(ggrepel)
 library(mosaic)
 library(patchwork)
 library(sf)
 library(ggspatial)
+library(MASS)
 ```
 
 
@@ -114,43 +116,36 @@ full_cover_clean <- cover_clean_names |>
   filter(site != "Asilomar 3" &
          site != "Cannery Row 3" &
          site != "Great Tidepool 2" &
-         site != "Pacific Grove 1") |>                                      # removing site with no
-  unite(code, 1:3, sep = "-", remove = TRUE, na.rm = FALSE) |>              # creating code variable
-  group_by(code) |>                                                         # grouping to help with later code
+         site != "Pacific Grove 1") |>                                        # removing site with no
+  unite(code, 1:3, sep = "-", remove = TRUE, na.rm = FALSE) |>                # creating code variable
+  group_by(code) |>                                                           # grouping to help with later code
   mutate(algae_cover = 
-           sum(c_across(filamentous_turf:surfgrass), na.rm = T)) |>         # adding cover of all algae
+           sum(c_across(filamentous_turf:surfgrass), na.rm = T)) |>           # adding cover of all algae
   mutate(sessile_invert_cover = 
-           sum(c_across(pink_volcano_barnacle:serpulidae), na.rm = T)) |>   # adding cover of all sessile inverts
-  select(code, height, bare_rock, algae_cover, sessile_invert_cover)     # selecting only needed columns
+           sum(c_across(pink_volcano_barnacle:serpulidae), na.rm = T)) |>     # adding cover of all sessile inverts
+  dplyr::select(code, height, bare_rock, algae_cover, sessile_invert_cover)   # selecting only needed columns
   
 epibiosis_clean <- full_cover_clean |>
-  left_join(counts_clean, by = "code") |>                                   # combining with counts by code
-  mutate(across(is.numeric, ~replace_na(., 0)))                             # replacing NAs with 0s
+  left_join(counts_clean, by = "code") |>                                     # combining with counts by code
+  mutate(across(is.numeric, ~replace_na(., 0)))                               # replacing NAs with 0s
 
-write_csv(epibiosis_clean, file = "clean-data/epibiosis_clean.csv")         # save new clean csv
+write_csv(epibiosis_clean, file = "clean-data/epibiosis_clean.csv")           # save new clean csv
 ```
 
 
-# Determining Most Common Basibionts (1)
+# Creating a Preliminary Visualization of Our Data
 
 ```{r}
 epibiosis_clean |>
-  group_by(basibiont) |>
-  summarize(count = sum(count)) |>
-  filter(basibiont  != "[UNK] Several Basi") |>
-  ggplot() +
-  geom_col(aes(y = count, 
-               x = fct_reorder(basibiont, -count), 
-               fill = fct_reorder(basibiont, -count))) +
-  theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.3, size = 8)) +
-  labs(x = "Basibiont",
-       y = "Total Epibiont Count") +
-  scale_fill_manual(values = c("#08519C", "#3182BD", "#6BAED6", "#BDD7E7", "Gray", "Gray", "Gray", "Gray", "Gray",
-                               "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray",
-                               "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray", "Gray")) +
-  scale_y_continuous(limits = c(0, 1250), expand = c(0, 0), breaks = c(0, 300, 600, 900, 1200)) +
-  guides(fill = "none")
+  ggplot(aes(x = count)) +
+  geom_histogram(boundary = 0, binwidth = 4, color = "black", fill = "#6BAED6") +                 # creating a histogram of counts
+  theme_classic() +                                                                               # changing theme
+  scale_y_continuous(limits = c(0, 625), expand = c(0, 0), breaks = c(0, 150, 300, 450, 600)) +   # adjusting y scale
+  scale_x_continuous(limits = c(0, 82), expand = c(0, 0), breaks = c(0, 20, 40, 60, 80)) +        # adjusting x scale
+  labs(x = "Epibiont Count",
+       y = "Number of Observations")                                                              # changing axis labels
+
+ggsave("photos/count_hist.png", width = 6.5, height = 4.75)                                       # saving map as photo
 ```
 
 
@@ -179,6 +174,7 @@ vif(epibiont_model)
 
 
 ## Testing New Model with Interaction Terms Centered
+
 ```{r}
 # Centering collinear variables
 epibiosis_centered <- epibiosis_clean_combined |>
@@ -201,7 +197,8 @@ vif(epibiont_model2)
 ```
 
 
-## Testing model with no interaction terms
+## Testing Model with No Interaction Terms
+
 ```{r}
 # Running full model with interaction terms
 epibiont_model3 <- glm(formula = count ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock,
@@ -215,10 +212,138 @@ summary(epibiont_model3)
 vif(epibiont_model3)
 
 # Testing which model is better
-anova(epibiont_model3, epibiont_model, test = "F")
+anova(epibiont_model3, epibiont_model2)
 ```
 
-Interaction model is not significantly better. So we're running the model with no interactions
+
+# Checking Poisson Assumption of Constant Variance
+
+```{r}
+# Residuals vs. Fitted Plot
+epibiosis_clean_combined |>
+  ggplot(aes(x = log(fitted.values(epibiont_model3)),
+             y = residuals(epibiont_model3, type = "pearson"))) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  labs(x = "Log Fitted Values",
+       y = "Pearson Residuals") +
+  theme_bw()
+
+ggsave("photos/residuals_v_fitted.png", width = 6.5, height = 4.75)
+```
+
+We do not meet the assumption of constant variance. Running a negative binomial model instead
+
+
+## Testing Negative Binomial Model Instead
+
+```{r}
+# Running full model with interaction terms
+epibiont_model_nb <- glm.nb(formula = count ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock +
+                            bare_rock*factor(height) + sessile_invert_cover*factor(height) +
+                            algae_cover*factor(height),
+                      data = epibiosis_clean_combined)
+
+# Summarizing model
+summary(epibiont_model_nb)
+
+# Testing for collinearity
+vif(epibiont_model_nb)
+```
+
+
+## Testing Model with No Interaction Terms
+
+```{r}
+# Running full model with interaction terms
+epibiont_model_nb2 <- glm.nb(formula = count ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock,
+                      data = epibiosis_clean_combined)
+
+# Summarizing model
+summary(epibiont_model_nb2)
+
+# Testing for collinearity
+vif(epibiont_model_nb2)
+
+# Testing which model is better
+anova(epibiont_model_nb, epibiont_model_nb2)
+```
+
+Interaction model is not significantly better and no interactions are signficant. So we're running the model with no interactions
+
+
+## Secondary Visualization of Epibiont/Basibiont Pairs
+
+### Making the Pairs Dataset
+
+```{r}
+condensed_pairs <- epibiosis_clean |>                                                                     # creating condensed pairs dataset
+  janitor::clean_names() |>                                                                               # cleaning names
+  dplyr::select(epibiont, basibiont, count) |>                                                            # selecting only wanted variables
+  filter(basibiont  != "[UNK] Several Basi" &
+         basibiont  != "0") |>                                                                            # removing unknown basibionts
+  mutate(
+    epibiont = fct_collapse(as.factor(epibiont),
+               `Limpets` = c("Scabra", "Digitalis", "Black Limpet", "Plate Limpet", "File Limpet", "Discurria"),
+               `Other Gastropods` = c("Hooked Slippersnail", "Crepidula norrisiarum", "Translucent Slipper Snail",
+                                      "Variegate Amphissa"),
+               `Barnacles` = c("Balanus", "Chthamalus", "Pink Volcano Barnacle", "Gooseneck Barnacle"),
+               `Serpulidae` = "Serpulidae",
+               `Bryozoa and Porifera` = c("Bryozoa", "Microcionidae"),
+               `Tar Spot` = "Tar Spot",
+               `Red Algae` = c("Crustose Coralline Algae", "Filamentous Coralline Algae", "Red Algae",
+                               "Scouring Pad Algae", "Mastocarpus", "Nori", "Beauty Bush Algae"),
+               `Green Algae` = c("Green Algae", "Cladophora")),
+    basibiont = fct_collapse(as.factor(basibiont),
+               `Limpets` = c("Scabra", "File Limpet", "Black Limpet", "Shield Limpet", "Digitalis", "Plate Limpet",
+                             "Volcano Keyhole Limpet", "Whitecap Limpet"),
+               `Other Gastropods` = c("Black Tegula", "Crepidula norrisiarum", "Hooked Slippersnail", "Nucella", 
+                                      "Littorina", "Brown Tegula", "Striped Dogwinkle", "Emarginate Dogwinkle",
+                                      "Tegula sp.", "Circled Rocksnail", "Carinate Dovesnail", "Scaled Wormsnail"),
+               `Mussels and Bivalves` = c("California Mussel", "Green Falsejingle"),
+               `Chitons` = c("California Spiny Chiton", "Mossy Chiton"),
+               `Barnacles` = c("Balanus",  "Chthamalus", "Gooseneck Barnacle",
+                               "Pink Volcano Barnacle"))) |>                                               # combining into smaller groups
+  group_by(epibiont, basibiont) |>
+  summarise(count = sum(count))                                                                            # summarising counts for each pair
+```
+
+### Creating Visualization of all Epibiont/Basibiont Pairs
+
+```{r, fig.width=6.5, fig.height=5}
+# vector of labels you want to move outside
+small_labels <- c("Bryozoa and Porifera", "Chitons")
+
+condensed_pairs |>
+  ggplot(aes(
+    axis1 = fct_relevel(epibiont,
+      "Limpets", "Other Gastropods", "Barnacles", "Serpulidae",
+      "Bryozoa and Porifera", "Tar Spot", "Red Algae", "Green Algae"),
+    axis2 = fct_relevel(basibiont,
+      "Limpets", "Mussels and Bivalves", "Chitons",
+      "Other Gastropods", "Barnacles"),
+    y = count)) +
+  geom_alluvium(aes(fill = fct_relevel(epibiont,
+    "Limpets", "Other Gastropods", "Barnacles", "Serpulidae",
+    "Bryozoa and Porifera", "Tar Spot", "Red Algae", "Green Algae"))) +
+  geom_stratum(width = 0.4) +
+
+  # label only strata that are large enough
+  geom_text(stat = "stratum", aes(label = after_stat(
+    ifelse(stratum %in% small_labels, NA, as.character(stratum))))) +
+
+  scale_x_discrete(limits = c("Survey", "Response"), expand = c(0.17, 0.17)) +
+  theme_void() +
+  guides(fill = "none", color = "none") +
+  labs(title = "Epibiont                                                     Basibiont",
+       caption = "1. = Bryozoa and Porifera; 2. = Chitons (labels omitted due to low frequency)") +
+  theme(plot.title = element_text(size = 15, hjust = 0.5, vjust = -1),
+        plot.caption = element_text(hjust = 0.5, vjust = 5)) +
+  annotate("text", x = 0.8, y = 410, label = "1. —", hjust = 1) +
+  annotate("text", x = 2.20, y = 21, label = "— 2.", hjust = 0)
+
+ggsave("photos/pairs-weighted.png", width = 6.5, height = 4.75)
+```
 
 
 ## Separating Full Dataset by Sessile and Motile Basibionts
@@ -227,7 +352,6 @@ Interaction model is not significantly better. So we're running the model with n
 unique(epibiosis_clean$basibiont)
 
 sess_mot <- epibiosis_clean |>
-  drop_na(basibiont) |>
   mutate(
     basibiont = fct_collapse(as.factor(basibiont),
                 `Highly Motile` = c("Black Tegula", "Brown Tegula", "Tegula sp.", "Nucella", "Littorina",
@@ -238,11 +362,22 @@ sess_mot <- epibiosis_clean |>
                               "Volcano Keyhole Limpet", "California Spiny Chiton", "Mossy Chiton"),
                 Sessile = c("Gooseneck Barnacle", "Pink Volcano Barnacle", "Balanus", "Chthamalus",
                             "California Mussel", "Scaled Wormsnail", "Green Falsejingle"),
-                Other = c("[UNK] Several Basi", NA))) |>
+                Other = c("[UNK] Several Basi"))) |>
+  drop_na(basibiont) |>
   group_by(code, height, algae_cover, bare_rock, sessile_invert_cover, basibiont) |>
   summarize(count = sum(count)) |>
   ungroup() |>
-  filter(basibiont != "Other")
+  pivot_wider(names_from = basibiont, values_from = count, values_fill = 0) |>
+  dplyr::select(-Other) |>
+  filter(code != "Cannery Row 1-1-8" &
+         code != "Cannery Row 1-1-9" &
+         code != "Cannery Row 1-1-10" &
+         code != "Cannery Row 1-2-8" &
+         code != "Cannery Row 1-2-9" &
+         code != "Cannery Row 1-2-10" &
+         code != "Cannery Row 1-3-8" &
+         code != "Cannery Row 1-3-9" &
+         code != "Cannery Row 1-3-10")
 ```
 
 
@@ -250,6 +385,9 @@ sess_mot <- epibiosis_clean |>
 
 ```{r}
 sess_mot |>
+  pivot_longer(cols = 6:8,
+               names_to = "basibiont",
+               values_to = "count") |>
   ggplot(aes(y = count, x = fct_relevel(height, "Low", "Medium", "High"))) +
   geom_boxplot(outliers = F) +
   geom_jitter(alpha = 0.4, width = 0.2, aes(color = fct_relevel(height, "Low", "Medium", "High"))) +
@@ -265,32 +403,62 @@ sess_mot |>
 
 ## Running Sessile-Only Poisson Model, Determining Relevant Stats
 
-```{r}
-epi_sess_only <- sess_mot |>
-  filter(basibiont == "Sessile")
+### Sessile-Only Model
 
-sess_only_model <- glm(formula = count ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock,
-                              family = quasipoisson(link = log),
-                              data = epi_sess_only)
+```{r}
+sess_only_model <- glm.nb(formula = Sessile ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock,
+                              data = sess_mot)  
 
 summary(sess_only_model)
 vif(sess_only_model)
 ```
 
+### Sessile-Only Interaction Model
+
+```{r}
+# Centering collinear variables
+sess_mot_centered <- sess_mot |>
+  mutate(bare_rock_cent = bare_rock - mean(bare_rock)) |>
+  mutate(sess_inv_cent = sessile_invert_cover - mean(sessile_invert_cover)) |>
+  mutate(algae_cent = algae_cover - mean(algae_cover))
+
+sess_int_model <- glm.nb(formula = Sessile ~ factor(height) + sess_inv_cent + bare_rock_cent + algae_cent + factor(height)*sess_inv_cent +
+                                          factor(height)*algae_cent + factor(height)*bare_rock_cent,
+                              data = sess_mot_centered)
+
+summary(sess_int_model)
+
+# Testing which model is better
+anova(sess_only_model, sess_int_model)
+```
+
+Interaction model fits better for sessile
+
 
 ## Running Motile-Only Possion Model, Determining Relevant Stats
 
+### Motile-Only Model
+
 ```{r}
-epi_mot_only <- sess_mot |>
-  filter(basibiont == "Highly Motile")
+mot_only_model <- glm.nb(formula = `Highly Motile` ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock,
+                              data = sess_mot)  
 
-mot_only_model <- glm(formula = count ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock,
-                              family = quasipoisson(link = log),
-                              data = epi_mot_only)
-
-summary(mot_only_model)
-vif(mot_only_model)
-
-# not sure what this means for our data
+summary(sess_only_model)
+vif(sess_only_model)
 ```
 
+### Motile-Only Interaction Model
+
+```{r}
+mot_int_model <- glm.nb(formula = `Highly Motile` ~ factor(height) + sess_inv_cent + bare_rock_cent + algae_cent + 
+                           factor(height)*sess_inv_cent + factor(height)*algae_cent + factor(height)*bare_rock_cent,
+                              data = sess_mot_centered)
+
+summary(mot_int_model)
+vif(mot_int_model)
+
+# Testing which model is better
+anova(mot_only_model, mot_int_model)
+```
+
+Models not signficantly different and no interactions are signficant. Dropping interactions
