@@ -7,15 +7,13 @@ format: html
 # Loading Packages
 
 ```{r}
-library(tidyverse)
-library(car)
-library(ggalluvial)
-library(ggrepel)
-library(mosaic)
-library(patchwork)
-library(sf)
-library(ggspatial)
-library(MASS)
+library(tidyverse)    # package for data cleaning
+library(ggrepel)      # package for adding text repels
+library(sf)           # used to add a shapefile to a ggplot
+library(ggspatial)    # package for further map creation in ggplot
+library(car)          # used to determine collinearity
+library(MASS)         # package for negative binomial model
+library(ggalluvial)   # package to create alluvial graph
 ```
 
 
@@ -35,7 +33,7 @@ names <- read_csv("raw-data/Epibiont Survey Data Entry - Names and IDs.csv")
 counts_clean <- counts |> 
   unite(code, 1:3, sep = "-", remove = TRUE, na.rm = FALSE) |>  # creating code variable for each quadrat
   janitor::clean_names() |>                                     # cleaning column names
-  select(c(code, epibiont, basibiont, count))                   # selecting only needed columns
+  dplyr::select(c(code, epibiont, basibiont, count))            # selecting only needed columns (dplyr:: used due to errors with MASS package)
 ```
 
 
@@ -72,40 +70,57 @@ no_site_height |>
 
 # Creating Map from Shapefile
 
-```{r, fig.width=6.5, fig.height=4.75}
+```{r, fig.width=6.5, fig.height=5}
 MB_shapefile <- st_read("raw-data/utexaustin_data/Regional_Park_Districts.shp") # loading shapefile
 
-sites <- read_csv("raw-data/sample_site_coords.csv") |>   # loading coordinate data
-  janitor::clean_names() |>                       # cleaning names
-  filter(sample_location != "Cannery Row 2") |>   # combining Cannery Row 1 and 2 to prevent overlap
-  mutate(site_sample_number = ifelse(site == "Cannery Row", "1, 2", site_sample_number))
+sites <- read_csv("raw-data/sample_site_coords.csv") |>                     # loading coordinate data
+  janitor::clean_names() |>                                                 # cleaning names
+  filter(sample_location != "Cannery Row 2") |>                             # removing extra Cannery Row point before we combine them
+  mutate(sample_location = ifelse(site == "Cannery Row",
+                                  "Cannery Row 1,2", sample_location))      # combining Cannery Row 1 and 2 to prevent point overlap
   
 
-ggplot(MB_shapefile) +                                                      # creating plot using shapefile
-  geom_sf() +                                                               # adding points from coord data
+ggplot(MB_shapefile) +                                                                # creating plot using shapefile
+  geom_sf() +                                                                         # adding points from coord data
   geom_point(data = sites, 
-             aes(x = longitude, y = latitude, color = site),
+             aes(x = longitude, y = latitude), color = "black",
+             size = 2.5) +
+  geom_point(data = sites, 
+             aes(x = longitude, y = latitude,
+                 color = fct_reorder(sample_location, -latitude)),
              size = 2) +
-  geom_label(data = sites,                                                  # adding labels from coord data
-             aes(x = longitude, y = latitude, fill = site, label = site_sample_number),
-             alpha = 0.7, vjust = -0.25, hjust = 1.1, size = 2.5) +
-  coord_sf(xlim = c(-122, -121.86), ylim = c(36.54, 36.65),                 # zooming into the peninsula
+  geom_label(data = sites,                                                            # adding labels from coord data
+             aes(x = longitude, y = latitude, label = sample_location,
+                 fill = fct_reorder(sample_location, -latitude)),
+             vjust = 0.5, size = 2.5,
+             hjust = (ifelse(sites$sample_location %in% c("Point Pinos 1",            # adjusting site spacing
+                                                          "Otter Cove 1",
+                                                          "Lovers Point 1",
+                                                          "Cannery Row 1,2"), 0, 1)),
+             nudge_x = (ifelse(sites$sample_location %in% c("Point Pinos 1",
+                                                            "Otter Cove 1",
+                                                            "Lovers Point 1",
+                                                            "Cannery Row 1,2"), 0.002, -0.002))) +
+  coord_sf(xlim = c(-122, -121.86), ylim = c(36.54, 36.65),                           # zooming into the peninsula
            expand = FALSE) +
-  labs(x = "Longitude",                                                     # adding axis labels and title
+  labs(x = "Longitude",                                                               # adding axis labels and title
        y = "Latitude",
-       color = "Site:",
        title = "Intertidal Sampling Sites Along the Monterey Peninsula") +
-  theme_bw() +                                                              # changing theme
+  theme_bw() +                                                                        # changing theme
   scale_x_continuous(breaks = c(-122, -121.965, -121.93, -121.895, -121.86)) +
-  scale_y_continuous(breaks = c(36.54, 36.5675, 36.595, 36.6225, 36.65)) +  # altering axis breaks
-  annotation_scale(location = "br", width_hint = 0.4) +                     # adding scale
-  annotation_north_arrow(location = "br", which_north = "true",             # adding compass heading
+  scale_y_continuous(breaks = c(36.54, 36.5675, 36.595, 36.6225, 36.65)) +            # altering axis breaks
+  scale_fill_brewer() +
+  scale_color_brewer() +
+  annotation_scale(location = "br", width_hint = 0.4) +                               # adding scale
+  annotation_north_arrow(location = "br", which_north = "true",                       # adding compass heading
                          height = unit(3, "cm"), width = unit(3, "cm"), 
                          pad_y = unit(0.5, "cm"), pad_x = unit(0.4, "cm"),
                          style = north_arrow_fancy_orienteering) +
-  guides(fill = "none")                                                     # removing fill guide
+  guides(fill = "none",
+         color = "none") +                                                            # removing legends
+  theme(plot.title = element_text(hjust = 0.5))                                       # centering title
 
-ggsave("photos/site_map.png", width = 6.5, height = 4.75)                   # saving map as photo
+ggsave("photos/site_map.png", width = 6.5, height = 5.5)   # saving map as photo
 ```
 
 
@@ -255,7 +270,7 @@ vif(epibiont_model_nb)
 ## Testing Model with No Interaction Terms
 
 ```{r}
-# Running full model with interaction terms
+# Running reduced model with no interaction terms
 epibiont_model_nb2 <- glm.nb(formula = count ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock,
                       data = epibiosis_clean_combined)
 
@@ -335,7 +350,7 @@ condensed_pairs |>
   scale_x_discrete(limits = c("Survey", "Response"), expand = c(0.17, 0.17)) +
   theme_void() +
   guides(fill = "none", color = "none") +
-  labs(title = "Epibiont                                                     Basibiont",
+  labs(title = "Epibiont                                                      Basibiont",
        caption = "1. = Bryozoa and Porifera; 2. = Chitons (labels omitted due to low frequency)") +
   theme(plot.title = element_text(size = 15, hjust = 0.5, vjust = -1),
         plot.caption = element_text(hjust = 0.5, vjust = 5)) +
