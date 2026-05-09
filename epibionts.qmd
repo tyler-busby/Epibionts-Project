@@ -77,8 +77,8 @@ sites <- read_csv("raw-data/sample_site_coords.csv") |>                     # lo
   janitor::clean_names() |>                                                 # cleaning names
   filter(sample_location != "Cannery Row 2") |>                             # removing extra Cannery Row point before we combine them
   mutate(sample_location = ifelse(site == "Cannery Row",
-                                  "Cannery Row 1,2", sample_location))      # combining Cannery Row 1 and 2 to prevent point overlap
-  
+                                  "Cannery Row 1,2", sample_location),      # combining Cannery Row 1 and 2 to prevent point overlap
+         lat_rank = rank(-latitude))                                        # ranking the latitudes for a more even color palette
 
 ggplot(MB_shapefile) +                                                                # creating plot using shapefile
   geom_sf() +                                                                         # adding points from coord data
@@ -86,12 +86,11 @@ ggplot(MB_shapefile) +                                                          
              aes(x = longitude, y = latitude), color = "black",
              size = 2.5) +
   geom_point(data = sites, 
-             aes(x = longitude, y = latitude,
-                 color = fct_reorder(sample_location, -latitude)),
+             aes(x = longitude, y = latitude, color = lat_rank),
              size = 2) +
   geom_label(data = sites,                                                            # adding labels from coord data
              aes(x = longitude, y = latitude, label = sample_location,
-                 fill = fct_reorder(sample_location, -latitude)),
+                 fill = lat_rank),
              vjust = 0.5, size = 2.5,
              hjust = (ifelse(sites$sample_location %in% c("Point Pinos 1",            # adjusting site spacing
                                                           "Otter Cove 1",
@@ -109,8 +108,8 @@ ggplot(MB_shapefile) +                                                          
   theme_bw() +                                                                        # changing theme
   scale_x_continuous(breaks = c(-122, -121.965, -121.93, -121.895, -121.86)) +
   scale_y_continuous(breaks = c(36.54, 36.5675, 36.595, 36.6225, 36.65)) +            # altering axis breaks
-  scale_fill_brewer() +
-  scale_color_brewer() +
+  scale_fill_gradient(low = "#F7FBFF", high = "#2171B5") +
+  scale_color_gradient(low = "#F7FBFF", high = "#2171B5") +
   annotation_scale(location = "br", width_hint = 0.4) +                               # adding scale
   annotation_north_arrow(location = "br", which_north = "true",                       # adding compass heading
                          height = unit(3, "cm"), width = unit(3, "cm"), 
@@ -359,6 +358,38 @@ condensed_pairs |>
 
 ggsave("photos/pairs-weighted.png", width = 6.5, height = 4.75)
 ```
+
+
+## Creating a Table of Common Epibionts for Each Basibiont
+
+```{r}
+common_pair_df <- data.frame(Basibionts = character(), 
+                             Epibionts = character(), 
+                             stringsAsFactors = FALSE)
+
+for (i in unique(condensed_pairs$basibiont)) {
+  
+  comm_pairs <- condensed_pairs |>
+    filter(basibiont == i) |>
+    arrange(desc(count)) |>
+    head(3)
+  
+  top3_epis <- paste0(
+    comm_pairs$epibiont[1], " (", comm_pairs$count[1], "), ",
+    comm_pairs$epibiont[2], " (", comm_pairs$count[2], "), ",
+    comm_pairs$epibiont[3], " (", comm_pairs$count[3], ")"
+  )
+    
+  common_pair_df <- common_pair_df |>
+    add_row(Basibionts = i,
+            Epibionts = top3_epis)
+  
+  print(top3_epis)
+}
+
+knitr::kable(common_pair_df)
+```
+
 
 
 ## Separating Full Dataset by Sessile and Motile Basibionts
