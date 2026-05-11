@@ -14,6 +14,8 @@ library(ggspatial)    # package for further map creation in ggplot
 library(car)          # used to determine collinearity
 library(MASS)         # package for negative binomial model
 library(ggalluvial)   # package to create alluvial graph
+library(patchwork)    # allows for easy combining of plots
+library(dunn.test)    # used to run dunn test
 ```
 
 
@@ -159,91 +161,90 @@ epibiosis_clean |>
   labs(x = "Epibiont Count",
        y = "Number of Observations")                                                              # changing axis labels
 
-ggsave("photos/count_hist.png", width = 6.5, height = 4.75)                                       # saving map as photo
+ggsave("photos/count_hist.png", width = 6.5, height = 4.75)                                       # saving map as png
 ```
 
 
 # Running Full Poisson Model, Determining Relevant Stats
 
 ```{r}
-# Summarizing data by code. Other variables added to keep them after summarize function is run
-epibiosis_clean_combined <- epibiosis_clean |>
-  group_by(code, height, algae_cover, bare_rock, sessile_invert_cover) |>
-  summarize(count = sum(count)) |>
+epibiosis_clean_combined <- epibiosis_clean |>                                    # creating new combined dataset
+  group_by(code, height, algae_cover, bare_rock, sessile_invert_cover) |>         # adding non-code variables to keep them after summarizing
+  summarize(count = sum(count)) |>                                                # summarizing data by code
   ungroup()
 
-# Running full model with interaction terms
-epibiont_model <- glm(formula = count ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock +
-                        bare_rock*factor(height) + sessile_invert_cover*factor(height) +
-                        algae_cover*factor(height),
-                      family = quasipoisson(link = log),
+epibiont_model <- glm(formula = count ~ factor(height) +
+                                        sessile_invert_cover +
+                                        algae_cover + bare_rock +
+                                        bare_rock*factor(height) +
+                                        sessile_invert_cover*factor(height) +
+                                        algae_cover*factor(height),               # creating full model with interactions
+                      family = quasipoisson(link = log),                          # running model as a quasipoisson
                       data = epibiosis_clean_combined)
 
-# Summarizing model
-summary(epibiont_model)
+summary(epibiont_model)                                                           # summarizing interaction model
 
-# Testing for collinearity
-vif(epibiont_model)
+vif(epibiont_model)                                                               # testing model for collinearity
 ```
 
 
 ## Testing New Model with Interaction Terms Centered
 
 ```{r}
-# Centering collinear variables
-epibiosis_centered <- epibiosis_clean_combined |>
+epibiosis_centered <- epibiosis_clean_combined |>                                 # creating dataset with centered cover variables
   mutate(bare_rock_cent = bare_rock - mean(bare_rock)) |>
   mutate(sess_inv_cent = sessile_invert_cover - mean(sessile_invert_cover)) |>
-  mutate(algae_cent = algae_cover - mean(algae_cover))
+  mutate(algae_cent = algae_cover - mean(algae_cover))                            # centering collinear variables
 
-# Rerunning model  
-epibiont_model2 <- glm(formula = count ~ factor(height) + sess_inv_cent + algae_cent + bare_rock_cent +
-                        bare_rock_cent*factor(height) + sess_inv_cent*factor(height) +
-                        algae_cent*factor(height),
-                      family = quasipoisson(link = log),
+epibiont_model2 <- glm(formula = count ~ factor(height) +
+                                         sess_inv_cent +
+                                         algae_cent +
+                                         bare_rock_cent +
+                                         bare_rock_cent*factor(height) +
+                                         sess_inv_cent*factor(height) +
+                                         algae_cent*factor(height),               # creating full centered model with interactions
+                      family = quasipoisson(link = log),                          # running model as a quasipoisson
                       data = epibiosis_centered)
 
-# Summarizing new model
-summary(epibiont_model2)
+summary(epibiont_model2)                                                          # summarizing centered interaction model
 
-# Testing collinearity of new model
-vif(epibiont_model2)
+vif(epibiont_model2)                                                              # testing model for collinearity
 ```
 
 
 ## Testing Model with No Interaction Terms
 
 ```{r}
-# Running full model with interaction terms
-epibiont_model3 <- glm(formula = count ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock,
+epibiont_model3 <- glm(formula = count ~ factor(height) +
+                                         sessile_invert_cover +
+                                         algae_cover +
+                                         bare_rock,
                       family = quasipoisson(link = log),
-                      data = epibiosis_clean_combined)
+                      data = epibiosis_clean_combined)             # running full model with no interaction terms
 
-# Summarizing model
-summary(epibiont_model3)
+summary(epibiont_model3)                                           # summarizing model with no interactions
 
-# Testing for collinearity
-vif(epibiont_model3)
+vif(epibiont_model3)                                               # testing model for collinearity
 
-# Testing which model is better
-anova(epibiont_model3, epibiont_model2)
+anova(epibiont_model3, epibiont_model2)                            # testing whether the interaction model or this model is better
 ```
+
+Neither model is better. Running the reduced model  
 
 
 # Checking Poisson Assumption of Constant Variance
 
 ```{r}
-# Residuals vs. Fitted Plot
 epibiosis_clean_combined |>
   ggplot(aes(x = log(fitted.values(epibiont_model3)),
-             y = residuals(epibiont_model3, type = "pearson"))) +
+             y = residuals(epibiont_model3, type = "pearson"))) +       # creating a Residuals vs. Fitted Plot of our model
   geom_point() +
-  geom_hline(yintercept = 0) +
+  geom_hline(yintercept = 0) +                                          # adding horizontal line at y = 0
   labs(x = "Log Fitted Values",
-       y = "Pearson Residuals") +
-  theme_bw()
+       y = "Pearson Residuals") +                                       # adding proper x and y labels
+  theme_bw()                                                            # changing the theme
 
-ggsave("photos/residuals_v_fitted.png", width = 6.5, height = 4.75)
+ggsave("photos/residuals_v_fitted.png", width = 6.5, height = 4.75)     # saving plot as a png
 ```
 
 We do not meet the assumption of constant variance. Running a negative binomial model instead
@@ -252,35 +253,35 @@ We do not meet the assumption of constant variance. Running a negative binomial 
 ## Testing Negative Binomial Model Instead
 
 ```{r}
-# Running full model with interaction terms
-epibiont_model_nb <- glm.nb(formula = count ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock +
-                            bare_rock*factor(height) + sessile_invert_cover*factor(height) +
-                            algae_cover*factor(height),
+epibiont_model_nb <- glm.nb(formula = count ~ factor(height) +
+                                              sessile_invert_cover +
+                                              algae_cover +
+                                              bare_rock +
+                                              bare_rock*factor(height) +
+                                              sessile_invert_cover*factor(height) +
+                                              algae_cover*factor(height),              # running a negative binomial interaction model
                       data = epibiosis_clean_combined)
 
-# Summarizing model
-summary(epibiont_model_nb)
+summary(epibiont_model_nb)                                                             # summarizing the negative binomial interaction model
 
-# Testing for collinearity
-vif(epibiont_model_nb)
+vif(epibiont_model_nb)                                                                 # testing model for collinearity
 ```
 
 
 ## Testing Model with No Interaction Terms
 
 ```{r}
-# Running reduced model with no interaction terms
-epibiont_model_nb2 <- glm.nb(formula = count ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock,
+epibiont_model_nb2 <- glm.nb(formula = count ~ factor(height) +
+                                               sessile_invert_cover +
+                                               algae_cover +
+                                               bare_rock,               # running a reduced negative binomial model
                       data = epibiosis_clean_combined)
 
-# Summarizing model
-summary(epibiont_model_nb2)
+summary(epibiont_model_nb2)                                             # summarizing the negative binomial interaction model
 
-# Testing for collinearity
-vif(epibiont_model_nb2)
+vif(epibiont_model_nb2)                                                 # testing model for collinearity
 
-# Testing which model is better
-anova(epibiont_model_nb, epibiont_model_nb2)
+anova(epibiont_model_nb, epibiont_model_nb2)                            # testing whether the interaction model or this model is better
 ```
 
 Interaction model is not significantly better and no interactions are signficant. So we're running the model with no interactions
@@ -311,9 +312,10 @@ condensed_pairs <- epibiosis_clean |>                                           
     basibiont = fct_collapse(as.factor(basibiont),
                `Limpets` = c("Scabra", "File Limpet", "Black Limpet", "Shield Limpet", "Digitalis", "Plate Limpet",
                              "Volcano Keyhole Limpet", "Whitecap Limpet"),
-               `Other Gastropods` = c("Black Tegula", "Crepidula norrisiarum", "Hooked Slippersnail", "Nucella", 
-                                      "Littorina", "Brown Tegula", "Striped Dogwinkle", "Emarginate Dogwinkle",
-                                      "Tegula sp.", "Circled Rocksnail", "Carinate Dovesnail", "Scaled Wormsnail"),
+               `Tegula` = c("Black Tegula", "Tegula sp.", "Brown Tegula"),
+               `Other Gastropod Basis` = c("Crepidula norrisiarum", "Hooked Slippersnail", "Nucella", 
+                                           "Littorina", "Striped Dogwinkle", "Emarginate Dogwinkle",
+                                           "Circled Rocksnail", "Carinate Dovesnail", "Scaled Wormsnail"),
                `Mussels and Bivalves` = c("California Mussel", "Green Falsejingle"),
                `Chitons` = c("California Spiny Chiton", "Mossy Chiton"),
                `Barnacles` = c("Balanus",  "Chthamalus", "Gooseneck Barnacle",
@@ -325,38 +327,41 @@ condensed_pairs <- epibiosis_clean |>                                           
 ### Creating Visualization of all Epibiont/Basibiont Pairs
 
 ```{r, fig.width=6.5, fig.height=5}
-# vector of labels you want to move outside
-small_labels <- c("Bryozoa and Porifera", "Chitons")
+small_labels <- c("Bryozoa and Porifera", "Chitons", "Other Gastropod Basis")                   # creating labels for small counts
+
+viridis::viridis(n = 7, option = "mako")                                                        # generating colors for visualization
 
 condensed_pairs |>
   ggplot(aes(
-    axis1 = fct_relevel(epibiont,
+    axis2 = fct_relevel(epibiont,
       "Limpets", "Other Gastropods", "Barnacles", "Serpulidae",
-      "Bryozoa and Porifera", "Tar Spot", "Red Algae", "Green Algae"),
-    axis2 = fct_relevel(basibiont,
-      "Limpets", "Mussels and Bivalves", "Chitons",
-      "Other Gastropods", "Barnacles"),
-    y = count)) +
-  geom_alluvium(aes(fill = fct_relevel(epibiont,
-    "Limpets", "Other Gastropods", "Barnacles", "Serpulidae",
-    "Bryozoa and Porifera", "Tar Spot", "Red Algae", "Green Algae"))) +
-  geom_stratum(width = 0.4) +
-
-  # label only strata that are large enough
-  geom_text(stat = "stratum", aes(label = after_stat(
-    ifelse(stratum %in% small_labels, NA, as.character(stratum))))) +
-
-  scale_x_discrete(limits = c("Survey", "Response"), expand = c(0.17, 0.17)) +
-  theme_void() +
-  guides(fill = "none", color = "none") +
-  labs(title = "Epibiont                                                      Basibiont",
-       caption = "1. = Bryozoa and Porifera; 2. = Chitons (labels omitted due to low frequency)") +
+      "Bryozoa and Porifera", "Tar Spot", "Red Algae", "Green Algae"),                          # creating epibiont stratum
+    axis1 = fct_relevel(basibiont,
+      "Limpets", "Tegula", "Other Gastropod Basis", "Mussels and Bivalves",
+      "Chitons", "Barnacles"),                                                                  # creating basibiont stratum
+    y = count)) +                                                                               # weighing strata height as equal to count
+  geom_alluvium(aes(fill = fct_relevel(basibiont,
+      "Limpets", "Tegula", "Other Gastropod Basis", "Mussels and Bivalves",
+      "Chitons", "Barnacles")),                                                                 # coloring based on basibiont
+      alpha = 0.6) +
+  geom_stratum(width = 0.4) +                                                                   # reducing strata width
+  geom_text(stat = "stratum", aes(label = after_stat(                                           # creating text labels
+    ifelse(stratum %in% small_labels, NA, as.character(stratum))))) +                           # labeling only strata that are large enough
+  scale_x_discrete(limits = c("Survey", "Response"), expand = c(0.17, 0.17)) +                  # adjusting scale of x variable
+  scale_fill_manual(values = c("#78D6AEFF", "#38AAACFF", "#357BA2FF",
+                               "#40498EFF", "#342346FF", "#0B0405FF")) +
+  theme_void() +                                                                                # changing theme
+  guides(fill = "none", color = "none") +                                                       # removing unnecessary legends
+  labs(title = "Basibiont                                                    Epibiont",
+       caption = "1. = Other Gastropods; 2. = Chitons; 3. = Bryozoa and Porifera 
+       (labels omitted due to low frequency)") +                                                # adding title and caption
   theme(plot.title = element_text(size = 15, hjust = 0.5, vjust = -1),
-        plot.caption = element_text(hjust = 0.5, vjust = 5)) +
-  annotate("text", x = 0.8, y = 410, label = "1. —", hjust = 1) +
-  annotate("text", x = 2.20, y = 21, label = "— 2.", hjust = 0)
+        plot.caption = element_text(hjust = 0.5, vjust = 5)) +                                  # adjusting title and caption
+  annotate("text", x = 0.8, y = 1567, label = "1. —", hjust = 1) +
+  annotate("text", x = 0.8, y = 420, label = "2. —", hjust = 1) +
+  annotate("text", x = 2.20, y = 411, label = "— 3.", hjust = 0)                                # adding annotations for small labels
 
-ggsave("photos/pairs-weighted.png", width = 6.5, height = 4.75)
+ggsave("photos/pairs-weighted.png", width = 6.5, height = 4.75)                                 # saving plot as a png
 ```
 
 
@@ -365,29 +370,38 @@ ggsave("photos/pairs-weighted.png", width = 6.5, height = 4.75)
 ```{r}
 common_pair_df <- data.frame(Basibionts = character(), 
                              Epibionts = character(), 
-                             stringsAsFactors = FALSE)
+                             stringsAsFactors = FALSE)               # creating a blank common pairs dataframe
 
-for (i in unique(condensed_pairs$basibiont)) {
+for (i in unique(condensed_pairs$basibiont)) {                       # running a for loop for each unique basibiont
   
-  comm_pairs <- condensed_pairs |>
-    filter(basibiont == i) |>
-    arrange(desc(count)) |>
-    head(3)
+  comm_pairs <- condensed_pairs |>                                   # creating a dataframe of the top 3 pairs for each basibiont
+    ungroup() |>                                                     # ungrouping to allow for summary across all epibionts
+    filter(basibiont == i) |>                                        # filtering for only basibiont of interest
+    mutate(total = sum(count),
+           prop = round(count/total, 3))  |>                         # creating a proportion variable for each epibiont
+    arrange(desc(prop)) |>                                           # arranging in a descending order of proportion
+    head(3)                                                          # only keeping the top 3 pairs
   
   top3_epis <- paste0(
-    comm_pairs$epibiont[1], " (", comm_pairs$count[1], "), ",
-    comm_pairs$epibiont[2], " (", comm_pairs$count[2], "), ",
-    comm_pairs$epibiont[3], " (", comm_pairs$count[3], ")"
+    comm_pairs$epibiont[1], " (", comm_pairs$prop[1], "), ",
+    comm_pairs$epibiont[2], " (", comm_pairs$prop[2], "), ",
+    comm_pairs$epibiont[3], " (", comm_pairs$prop[3], ")"            # combining top 3 pairs and their proportions into one string
   )
     
-  common_pair_df <- common_pair_df |>
-    add_row(Basibionts = i,
-            Epibionts = top3_epis)
+  common_pair_df <- common_pair_df                                   # adding a new row to the common pairs df for each basibiont
+    add_row(Basibionts = i,                                          # adding the basibiont to Epibiont column
+            Epibionts = top3_epis)                                   # adding top 3 epibiont string to Epibiont column
   
-  print(top3_epis)
+  print(top3_epis)                                                   # printing string for troubleshooting
 }
 
-knitr::kable(common_pair_df)
+common_pair_df <- common_pair_df |>
+  arrange(factor(Basibionts, levels = c("Limpets", "Tegula",
+                                        "Other Gastropod Basis",
+                                        "Mussels and Bivalves",
+                                        "Chitons", "Barnacles")))    # rearranging common pair dataframe in same order as alluvial diagram
+
+knitr::kable(common_pair_df)                                         # creating table of our dataframe values
 ```
 
 
@@ -407,14 +421,14 @@ sess_mot <- epibiosis_clean |>
                               "File Limpet", "Whitecap Limpet", "Hooked Slippersnail", "Crepidula norrisiarum", 
                               "Volcano Keyhole Limpet", "California Spiny Chiton", "Mossy Chiton"),
                 Sessile = c("Gooseneck Barnacle", "Pink Volcano Barnacle", "Balanus", "Chthamalus",
-                            "California Mussel", "Scaled Wormsnail", "Green Falsejingle"),
+                            "California Mussel", "Scaled Wormsnail", "Green Falsejingle"),                       # combining groups
                 Other = c("[UNK] Several Basi"))) |>
-  drop_na(basibiont) |>
+  drop_na(basibiont) |>                                                                                          # removing NAs
   group_by(code, height, algae_cover, bare_rock, sessile_invert_cover, basibiont) |>
-  summarize(count = sum(count)) |>
+  summarize(count = sum(count)) |>                                                                               # summarizing by basibiont
   ungroup() |>
-  pivot_wider(names_from = basibiont, values_from = count, values_fill = 0) |>
-  dplyr::select(-Other) |>
+  pivot_wider(names_from = basibiont, values_from = count, values_fill = 0) |>                                   # making basibiont a column
+  dplyr::select(-Other) |>                                                                                       # removing other column
   filter(code != "Cannery Row 1-1-8" &
          code != "Cannery Row 1-1-9" &
          code != "Cannery Row 1-1-10" &
@@ -423,7 +437,7 @@ sess_mot <- epibiosis_clean |>
          code != "Cannery Row 1-2-10" &
          code != "Cannery Row 1-3-8" &
          code != "Cannery Row 1-3-9" &
-         code != "Cannery Row 1-3-10")
+         code != "Cannery Row 1-3-10")                                    # filtering out quadrats where basibionts were not marked properly
 ```
 
 
@@ -433,78 +447,108 @@ sess_mot <- epibiosis_clean |>
 sess_mot |>
   pivot_longer(cols = 6:8,
                names_to = "basibiont",
-               values_to = "count") |>
+               values_to = "count") |>                                                    # returning basibiont columns to rows
   ggplot(aes(y = count, x = fct_relevel(height, "Low", "Medium", "High"))) +
-  geom_boxplot(outliers = F) +
-  geom_jitter(alpha = 0.4, width = 0.2, aes(color = fct_relevel(height, "Low", "Medium", "High"))) +
-  facet_wrap(~fct_relevel(basibiont, "Sessile", "Sedentary", "Highly Motile")) +
-  scale_y_log10() +
-  theme_bw() +
+  geom_boxplot(outliers = F) +                                                            # returning basibiont columns to rows
+  geom_jitter(alpha = 0.7, width = 0.2, height = 0,
+              aes(color = fct_relevel(height, "Low", "Medium", "High"))) +                # adding jittered datapoints to boxplot
+  facet_wrap(~fct_relevel(basibiont, "Sessile", "Sedentary", "Highly Motile")) +          # faceting by basibiont type
+  scale_y_log10() +                                                                       # setting y-axis to a log scale
+  theme_bw() +                                                                            # changing theme
   labs(x = "Tidal Level",
-       y = "Epibiont Count") +
-  scale_color_viridis_d() +
-  guides(color = "none")
+       y = "Epibiont Count") +                                                            # setting x and y-axis labels
+  scale_color_manual(values = c("#6BAED6", "#2171B5", "#08306B")) +                       # setting manual colors similar to brewer blues
+  guides(color = "none")                                                                  # removing color legend
 ```
 
 
-## Running Sessile-Only Poisson Model, Determining Relevant Stats
+## Running Sessile and Motile-Only Negative Binomial Models, Determining Relevant Stats
 
 ### Sessile-Only Model
 
 ```{r}
-sess_only_model <- glm.nb(formula = Sessile ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock,
+sess_only_model <- glm.nb(formula = Sessile ~ factor(height) +
+                                              sessile_invert_cover +
+                                              algae_cover +
+                                              bare_rock,                # running sessile-only model
                               data = sess_mot)  
 
-summary(sess_only_model)
-vif(sess_only_model)
+summary(sess_only_model)                                                # summarising sessile-only model
+
+vif(sess_only_model)                                                    # testing model for collinearity
 ```
-
-### Sessile-Only Interaction Model
-
-```{r}
-# Centering collinear variables
-sess_mot_centered <- sess_mot |>
-  mutate(bare_rock_cent = bare_rock - mean(bare_rock)) |>
-  mutate(sess_inv_cent = sessile_invert_cover - mean(sessile_invert_cover)) |>
-  mutate(algae_cent = algae_cover - mean(algae_cover))
-
-sess_int_model <- glm.nb(formula = Sessile ~ factor(height) + sess_inv_cent + bare_rock_cent + algae_cent + factor(height)*sess_inv_cent +
-                                          factor(height)*algae_cent + factor(height)*bare_rock_cent,
-                              data = sess_mot_centered)
-
-summary(sess_int_model)
-
-# Testing which model is better
-anova(sess_only_model, sess_int_model)
-```
-
-Interaction model fits better for sessile
-
-
-## Running Motile-Only Possion Model, Determining Relevant Stats
 
 ### Motile-Only Model
 
 ```{r}
-mot_only_model <- glm.nb(formula = `Highly Motile` ~ factor(height) + sessile_invert_cover + algae_cover + bare_rock,
+mot_only_model <- glm.nb(formula = `Highly Motile` ~ factor(height) +
+                                                     sessile_invert_cover +
+                                                     algae_cover +
+                                                     bare_rock,                # running motile-only model
                               data = sess_mot)  
 
-summary(sess_only_model)
-vif(sess_only_model)
+summary(sess_only_model)                                                       # summarising motile-only model
+
+vif(sess_only_model)                                                           # testing model for collinearity
 ```
 
-### Motile-Only Interaction Model
+
+## Testing for Differences in Subpopulations
+
+### Creating AOV and New Dataset for Subpopulations
 
 ```{r}
-mot_int_model <- glm.nb(formula = `Highly Motile` ~ factor(height) + sess_inv_cent + bare_rock_cent + algae_cent + 
-                           factor(height)*sess_inv_cent + factor(height)*algae_cent + factor(height)*bare_rock_cent,
-                              data = sess_mot_centered)
+subpop_epis <- sess_mot |>
+  pivot_longer(cols = 6:8,
+               names_to = "subpopulation",
+               values_to = "count")                               # pivoting data to allow counts to be compared by subpopulations
 
-summary(mot_int_model)
-vif(mot_int_model)
-
-# Testing which model is better
-anova(mot_only_model, mot_int_model)
+subpop_aov <- aov(count ~ subpopulation, data = subpop_epis)      # creating an aov of epibiont count by subpopulation
 ```
 
-Models not signficantly different and no interactions are signficant. Dropping interactions
+### Testing ANOVA Assumptions
+
+```{r, fig.height=4, fig.width=9}
+qq_plot <- subpop_epis |>
+  ggplot(aes(sample = count)) +
+  stat_qq() +
+  stat_qq_line() +                                                # creating q-q plot for our anova
+  theme_bw() +                                                    # changing the theme
+  labs(x = "Theoretical Quantiles",
+       y = "Standardized Residuals",
+       title = "(a)") +                                           # creating new axis labels and title
+  theme(plot.title = element_text(size = 20))                     # making title a little bigger
+
+res_vs_fitted <- subpop_aov |>
+  ggplot(aes(x = .fitted, y = .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed",
+             color = "black") +                                   # creating residuals vs fitted for our anova
+  theme_bw() +                                                    # changing the theme
+  labs(x = "Fitted Values",
+       y = "Residuals",
+       title = "(b)") +                                           # creating new axis labels and title
+  theme(plot.title = element_text(size = 20))                     # making title a little bigger
+
+qq_plot + res_vs_fitted                                           # combining both plots using patchwork
+
+ggsave("photos/anova-assumptions.png", height = 4, width = 9)     # saving plot as a png
+```
+
+Distribution is clearly not normal and residuals not equal, meaning we do not meet the assumptions of the parametric test
+
+### Performing a Kruskal-Wallis Test
+
+```{r}
+kruskal.test(count ~ subpopulation, data = subpop_epis)           # running Kruskal-Wallis test
+```
+
+There is at least one significant difference in epibiont count across the different subpopulations.  
+
+### Performing a Dunn Test to Follow Up
+
+```{r}
+dunn.test(x = subpop_epis$count, g = subpop_epis$subpopulation)   # running a post-hoc Dunn test
+```
+
+
