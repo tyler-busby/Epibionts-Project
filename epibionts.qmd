@@ -388,7 +388,7 @@ for (i in unique(condensed_pairs$basibiont)) {                       # running a
     comm_pairs$epibiont[3], " (", comm_pairs$prop[3], ")"            # combining top 3 pairs and their proportions into one string
   )
     
-  common_pair_df <- common_pair_df                                   # adding a new row to the common pairs df for each basibiont
+  common_pair_df <- common_pair_df |>                                # adding a new row to the common pairs df for each basibiont
     add_row(Basibionts = i,                                          # adding the basibiont to Epibiont column
             Epibionts = top3_epis)                                   # adding top 3 epibiont string to Epibiont column
   
